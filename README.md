@@ -34,6 +34,12 @@ installed. Select the model folder and LoRA filename for your own installation.
 
 ## Publishing
 
-GitHub releases are versioned. Comfy Registry requires an actual publisher ID and
-publishing API key; neither is fabricated or embedded in this repository.
-See https://docs.comfy.org/registry/publishing for registration.
+Publisher: `coffmeteor`. Registry publication uses the official Comfy-Org action.
+Create a publishing API key for this publisher in Comfy Registry, then store it
+as the GitHub repository Actions secret `REGISTRY_ACCESS_TOKEN`. Never commit it.
+Run **Actions > Publish to Comfy Registry > Run workflow** for the first publish.
+Later changes to `pyproject.toml` on main also trigger publication. Bump the
+semantic version for each new Registry release. Without the secret, the workflow
+reports that publication was skipped; a green setup run is not a published version.
+
+See https://docs.comfy.org/registry/publishing for the official instructions.
