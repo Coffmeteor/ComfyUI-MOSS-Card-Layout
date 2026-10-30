@@ -40,7 +40,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Bright parted-lip smile showing upper teeth.",
-      "source_hair_description": "short hair."
+      "source_hair_description": "short hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          245,
+          278,
+          765,
+          722
+        ],
+        "review_note": "Complete crown with a narrow upper margin; rectangle includes brows beneath fringe and full rounded jaw."
+      }
     },
     {
       "id": "f7d389edb01",
@@ -72,7 +83,18 @@
       },
       "hair_color": "Chestnut brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bangs hair."
+      "source_hair_description": "short bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          268,
+          280,
+          740,
+          708
+        ],
+        "review_note": "Complete crown; side fringe overlaps forehead, with both cheeks and chin inside the rectangle."
+      }
     },
     {
       "id": "f8ac622520d",
@@ -104,7 +126,18 @@
       },
       "hair_color": "Black",
       "expression_description": "Soft parted-lip smile with a narrow band of upper teeth visible.",
-      "source_hair_description": "short bob bangs hair."
+      "source_hair_description": "short bob bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          262,
+          312,
+          758,
+          718
+        ],
+        "review_note": "Complete crown with visible upper margin; rectangle includes forehead, both cheeks and full chin."
+      }
     },
     {
       "id": "f4c7fe54721",
@@ -136,7 +169,18 @@
       },
       "hair_color": "Chestnut brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short wolf cut hair."
+      "source_hair_description": "short wolf cut hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          240,
+          318,
+          755,
+          734
+        ],
+        "review_note": "Complete tousled crown; rectangle protects brows and full tapered jaw beneath curtain strands."
+      }
     },
     {
       "id": "f5151b66914",
@@ -168,7 +212,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bob wavy hair."
+      "source_hair_description": "short bob wavy hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          208,
+          258,
+          740,
+          716
+        ],
+        "review_note": "Upper crown is cut by the photograph edge; full face remains visible beneath wispy fringe."
+      }
     },
     {
       "id": "f5b0ab81d82",
@@ -200,7 +255,18 @@
       },
       "hair_color": "Honey blonde",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bob hair."
+      "source_hair_description": "short bob hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          240,
+          264,
+          730,
+          712
+        ],
+        "review_note": "Upper crown is cropped; rectangle retains brow area, rounded cheeks and chin."
+      }
     },
     {
       "id": "f1e239fc6cc",
@@ -232,7 +298,18 @@
       },
       "hair_color": "Ash blonde",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short hair."
+      "source_hair_description": "short hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          205,
+          276,
+          752,
+          730
+        ],
+        "review_note": "Crown meets and is cut by the upper edge; swept strands overlap the forehead but facial outline is visible."
+      }
     },
     {
       "id": "ff47e9094a3",
@@ -264,7 +341,18 @@
       },
       "hair_color": "Ash blonde",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short hair."
+      "source_hair_description": "short hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          248,
+          288,
+          760,
+          734
+        ],
+        "review_note": "Crown has a narrow background margin; rectangle includes cheeks framed by the curtain strands."
+      }
     },
     {
       "id": "f41a30abc1f",
@@ -296,7 +384,18 @@
       },
       "hair_color": "Honey brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bangs hair."
+      "source_hair_description": "short bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          200,
+          240,
+          740,
+          738
+        ],
+        "review_note": "Crown is cropped at the upper edge; face rectangle includes forehead above brows and full lower jaw."
+      }
     },
     {
       "id": "f52994452e8",
@@ -328,7 +427,18 @@
       },
       "hair_color": "Light brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bob wavy hair."
+      "source_hair_description": "short bob wavy hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          235,
+          308,
+          742,
+          754
+        ],
+        "review_note": "Complete crown with a small upper margin; rectangle includes the brows and rounded chin beneath fringe."
+      }
     },
     {
       "id": "f1d68538d4e",
@@ -360,7 +470,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bob bangs hair."
+      "source_hair_description": "short bob bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          210,
+          264,
+          768,
+          750
+        ],
+        "review_note": "Crown is cropped at the upper edge; both cheek contours and full chin are retained."
+      }
     },
     {
       "id": "f1401f1f845",
@@ -392,7 +513,18 @@
       },
       "hair_color": "Chestnut brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bob layered hair."
+      "source_hair_description": "short bob layered hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          262,
+          270,
+          770,
+          746
+        ],
+        "review_note": "Complete layered crown; rectangle protects brows, cheek contours and tapered chin."
+      }
     },
     {
       "id": "fcdb46e9450",
@@ -424,7 +556,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bob bangs hair."
+      "source_hair_description": "short bob bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          235,
+          322,
+          782,
+          746
+        ],
+        "review_note": "Crown is cropped at the upper edge; rectangle includes brows under long fringe and the complete jaw."
+      }
     },
     {
       "id": "f28861ce62a",
@@ -456,7 +599,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bob straight bangs hair."
+      "source_hair_description": "short bob straight bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          262,
+          296,
+          768,
+          722
+        ],
+        "review_note": "Complete crown with a small margin; central part leaves forehead and facial outline visible."
+      }
     },
     {
       "id": "f01adeae4ad",
@@ -488,7 +642,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Pronounced closed-mouth smile with lifted cheeks; no teeth visible.",
-      "source_hair_description": "short bob hair."
+      "source_hair_description": "short bob hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          220,
+          260,
+          762,
+          734
+        ],
+        "review_note": "Crown is cropped; broad swept fringe overlaps one temple, while both cheeks and chin fit inside the rectangle."
+      }
     },
     {
       "id": "f49970a87f5",
@@ -520,7 +685,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bangs hair."
+      "source_hair_description": "short bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          212,
+          282,
+          795,
+          744
+        ],
+        "review_note": "Complete crown with a narrow upper margin; ears are outside the face-focused rectangle, with full jaw retained."
+      }
     },
     {
       "id": "f483bc746c1",
@@ -552,7 +728,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Parted-lip smile showing upper teeth.",
-      "source_hair_description": "short bob bangs hair."
+      "source_hair_description": "short bob bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          230,
+          330,
+          762,
+          770
+        ],
+        "review_note": "Complete crown with a small margin; rectangle includes brows under wispy fringe and the smiling jaw."
+      }
     },
     {
       "id": "fadf0621d5c",
@@ -584,7 +771,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bob bangs hair."
+      "source_hair_description": "short bob bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          225,
+          272,
+          782,
+          716
+        ],
+        "review_note": "Crown is cut by the upper edge; blunt fringe overlaps forehead without obscuring the protected facial features."
+      }
     },
     {
       "id": "f0caff0d8b2",
@@ -616,7 +814,18 @@
       },
       "hair_color": "Honey brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bangs hair."
+      "source_hair_description": "short bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          258,
+          310,
+          775,
+          750
+        ],
+        "review_note": "Complete crown with a narrow upper margin; face rectangle includes the full chin below the rounded bob."
+      }
     },
     {
       "id": "fed8bb18cc9",
@@ -648,7 +857,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Broad parted-lip smile showing an even row of upper teeth.",
-      "source_hair_description": "short hair."
+      "source_hair_description": "short hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          220,
+          296,
+          782,
+          724
+        ],
+        "review_note": "Complete crown with background above; rectangle includes brows, smiling cheeks and chin without earrings."
+      }
     },
     {
       "id": "f0ed328cb48",
@@ -680,7 +900,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium bob bangs hair."
+      "source_hair_description": "medium bob bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          232,
+          278,
+          780,
+          722
+        ],
+        "review_note": "Complete crown with a small margin; rectangle includes exposed forehead and full tapered jaw."
+      }
     },
     {
       "id": "f2ad7fef354",
@@ -712,7 +943,18 @@
       },
       "hair_color": "Brown with muted rose-pink face-framing streaks",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium bob hair."
+      "source_hair_description": "medium bob hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          250,
+          302,
+          768,
+          760
+        ],
+        "review_note": "Crown is cropped at the upper edge; rectangle retains brows and full jaw beneath the fringe."
+      }
     },
     {
       "id": "f7834ab30e1",
@@ -744,7 +986,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium wavy hair."
+      "source_hair_description": "medium wavy hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          248,
+          274,
+          768,
+          732
+        ],
+        "review_note": "Upper crown is cropped; rectangle includes brows, cheeks and chin between the loose waves."
+      }
     },
     {
       "id": "ff99e2b582d",
@@ -776,7 +1029,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium wavy hair."
+      "source_hair_description": "medium wavy hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          255,
+          252,
+          775,
+          724
+        ],
+        "review_note": "Complete wavy crown; rectangle includes a little forehead above brows and the full chin."
+      }
     },
     {
       "id": "f6464f359a9",
@@ -808,7 +1072,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium straight bangs hair."
+      "source_hair_description": "medium straight bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          228,
+          250,
+          768,
+          690
+        ],
+        "review_note": "Crown is cropped at the upper edge; diagonal fringe overlaps the forehead while the complete jaw remains visible."
+      }
     },
     {
       "id": "fc80d892f38",
@@ -840,7 +1115,18 @@
       },
       "hair_color": "Ash blonde",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium hair."
+      "source_hair_description": "medium hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          245,
+          236,
+          768,
+          682
+        ],
+        "review_note": "Crown is cropped; rectangle includes brow-level features and full chin within the light curtain strands."
+      }
     },
     {
       "id": "f1afb861ba3",
@@ -872,7 +1158,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium hair."
+      "source_hair_description": "medium hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          202,
+          284,
+          778,
+          706
+        ],
+        "review_note": "Complete crown with upper margin; rectangle includes both cheek contours below the side fringe."
+      }
     },
     {
       "id": "f795a74f2f1",
@@ -904,7 +1201,18 @@
       },
       "hair_color": "Chestnut brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium hair."
+      "source_hair_description": "medium hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          265,
+          272,
+          765,
+          690
+        ],
+        "review_note": "Uppermost crown is clipped by the photograph edge; rectangle is restricted to the complete visible face."
+      }
     },
     {
       "id": "fe7a9bf4057",
@@ -936,7 +1244,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium hair."
+      "source_hair_description": "medium hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          250,
+          264,
+          745,
+          652
+        ],
+        "review_note": "Complete crown with upper margin; the smaller facial region is boxed separately from the long hair."
+      }
     },
     {
       "id": "fb91e715311",
@@ -968,7 +1287,18 @@
       },
       "hair_color": "Honey brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium wavy wolf cut hair."
+      "source_hair_description": "medium wavy wolf cut hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          260,
+          268,
+          735,
+          674
+        ],
+        "review_note": "Crown is cropped by the upper edge; rectangle includes brows beneath fine fringe and the full chin."
+      }
     },
     {
       "id": "f70c60387b3",
@@ -1000,7 +1330,18 @@
       },
       "hair_color": "Light brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium wavy hair."
+      "source_hair_description": "medium wavy hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          252,
+          278,
+          768,
+          680
+        ],
+        "review_note": "Complete crown with a narrow margin; rectangle includes brow area and full jaw, excluding long waves."
+      }
     },
     {
       "id": "f1ccdcb539e",
@@ -1032,7 +1373,18 @@
       },
       "hair_color": "Light brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium layered hair."
+      "source_hair_description": "medium layered hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          262,
+          334,
+          770,
+          750
+        ],
+        "review_note": "Main crown contour is complete with a narrow margin; airy fringe overlaps brows inside the rectangle."
+      }
     },
     {
       "id": "fbf358e9978",
@@ -1064,7 +1416,18 @@
       },
       "hair_color": "Ash blonde",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium layered hair."
+      "source_hair_description": "medium layered hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          255,
+          228,
+          730,
+          688
+        ],
+        "review_note": "Crown is cropped; rectangle includes the visible forehead strip, cheeks and full chin."
+      }
     },
     {
       "id": "f91ce671038",
@@ -1096,7 +1459,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle parted-lip smile showing upper teeth.",
-      "source_hair_description": "medium bob hair."
+      "source_hair_description": "medium bob hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          208,
+          250,
+          792,
+          716
+        ],
+        "review_note": "Crown is cropped at the upper edge; rectangle includes smiling cheeks and full lower jaw."
+      }
     },
     {
       "id": "f7045a08216",
@@ -1128,7 +1502,18 @@
       },
       "hair_color": "Light brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium layered hair."
+      "source_hair_description": "medium layered hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          278,
+          280,
+          780,
+          728
+        ],
+        "review_note": "Crown is cropped; rectangle follows the narrower face between sweeping layers and includes full chin."
+      }
     },
     {
       "id": "f183050c129",
@@ -1160,7 +1545,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Broad parted-lip smile showing upper teeth, with lifted cheeks and narrowed eyes.",
-      "source_hair_description": "medium hair."
+      "source_hair_description": "medium hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          210,
+          268,
+          798,
+          754
+        ],
+        "review_note": "Complete crown with background above; rectangle includes raised smiling cheeks and complete chin."
+      }
     },
     {
       "id": "f4e3570fd63",
@@ -1192,7 +1588,18 @@
       },
       "hair_color": "Black",
       "expression_description": "Relaxed parted lips; no teeth visible.",
-      "source_hair_description": "medium hair."
+      "source_hair_description": "medium hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          242,
+          244,
+          778,
+          684
+        ],
+        "review_note": "Complete crown with upper background; rectangle includes brows beneath fringe and the full narrow jaw."
+      }
     },
     {
       "id": "f9403d4a104",
@@ -1224,7 +1631,18 @@
       },
       "hair_color": "Black",
       "expression_description": "Slightly parted lips showing upper tooth edges; no smile.",
-      "source_hair_description": "medium hair."
+      "source_hair_description": "medium hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          260,
+          252,
+          762,
+          674
+        ],
+        "review_note": "Complete crown with background above; wispy fringe crosses forehead inside the face-focused rectangle."
+      }
     },
     {
       "id": "fbe68e9d974",
@@ -1256,7 +1674,18 @@
       },
       "hair_color": "Black",
       "expression_description": "Relaxed closed mouth; no teeth visible.",
-      "source_hair_description": "medium hair."
+      "source_hair_description": "medium hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          200,
+          290,
+          800,
+          790
+        ],
+        "review_note": "Complete crown of tied hairstyle; larger facial rectangle includes brows, broad cheek contours and full chin."
+      }
     },
     {
       "id": "ffb0a9cec14",
@@ -1288,7 +1717,18 @@
       },
       "hair_color": "Warm brown",
       "expression_description": "Broad parted-lip smile showing upper and lower teeth, with lifted cheeks.",
-      "source_hair_description": "medium hair."
+      "source_hair_description": "medium hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          210,
+          258,
+          782,
+          686
+        ],
+        "review_note": "Complete wavy crown; rectangle protects the brow area and full smiling jaw."
+      }
     },
     {
       "id": "f9787eb136b",
@@ -1320,7 +1760,18 @@
       },
       "hair_color": "Chestnut brown",
       "expression_description": "Small parted-lip smile with a narrow glimpse of upper teeth.",
-      "source_hair_description": "medium-long wavy hair."
+      "source_hair_description": "medium-long wavy hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          230,
+          226,
+          748,
+          654
+        ],
+        "review_note": "Upper crown is cropped; rectangle includes exposed forehead above brows and complete chin."
+      }
     },
     {
       "id": "f2b231ba955",
@@ -1352,7 +1803,18 @@
       },
       "hair_color": "Honey brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium-long layered hair."
+      "source_hair_description": "medium-long layered hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          258,
+          278,
+          785,
+          676
+        ],
+        "review_note": "Crown is cropped at the upper edge; wispy strands overlap the forehead while the full jaw is visible."
+      }
     },
     {
       "id": "f134ec4bbeb",
@@ -1384,7 +1846,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium-long layered hair."
+      "source_hair_description": "medium-long layered hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          255,
+          318,
+          750,
+          714
+        ],
+        "review_note": "Complete crown with background margin; rectangle excludes the long hair and includes full facial outline."
+      }
     },
     {
       "id": "f4d008ca477",
@@ -1416,7 +1889,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium-long layered hair."
+      "source_hair_description": "medium-long layered hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          205,
+          270,
+          770,
+          692
+        ],
+        "review_note": "Upper crown is cropped; swept strands overlap the temples, with cheeks and chin protected."
+      }
     },
     {
       "id": "ffca9333176",
@@ -1448,7 +1932,18 @@
       },
       "hair_color": "Ash brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "medium-long hair."
+      "source_hair_description": "medium-long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          238,
+          330,
+          775,
+          764
+        ],
+        "review_note": "Crown is cropped; rectangle includes brows, rounded cheeks and full tapered chin beneath curtain strands."
+      }
     },
     {
       "id": "f041ee5b0fd",
@@ -1480,7 +1975,18 @@
       },
       "hair_color": "Black",
       "expression_description": "Relaxed parted lips; no teeth visible.",
-      "source_hair_description": "medium-long hair."
+      "source_hair_description": "medium-long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          245,
+          250,
+          752,
+          640
+        ],
+        "review_note": "Complete crown with a narrow margin; eye-skimming fringe overlaps the brow area inside the rectangle."
+      }
     },
     {
       "id": "f2c168f950c",
@@ -1512,7 +2018,18 @@
       },
       "hair_color": "Black",
       "expression_description": "Wide open-mouth smile showing upper teeth and a little lower teeth.",
-      "source_hair_description": "medium-long hair."
+      "source_hair_description": "medium-long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          232,
+          272,
+          742,
+          678
+        ],
+        "review_note": "Complete crown with visible margin; rectangle includes brows and complete jaw beneath the open-mouth smile."
+      }
     },
     {
       "id": "f6579990404",
@@ -1544,7 +2061,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Broad parted-lip smile showing upper teeth.",
-      "source_hair_description": "medium-long hair."
+      "source_hair_description": "medium-long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          242,
+          286,
+          792,
+          694
+        ],
+        "review_note": "Complete crown with upper background; rectangle protects smiling cheeks and full chin between curtain strands."
+      }
     },
     {
       "id": "f8001953458",
@@ -1576,7 +2104,18 @@
       },
       "hair_color": "Black",
       "expression_description": "Parted lips with a narrow glimpse of upper teeth; relaxed mouth.",
-      "source_hair_description": "medium-long hair."
+      "source_hair_description": "medium-long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          262,
+          224,
+          742,
+          624
+        ],
+        "review_note": "Main crown contour is complete with a narrow margin; wispy strands cross forehead inside the face rectangle."
+      }
     },
     {
       "id": "fe301557cbc",
@@ -1608,7 +2147,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Slightly parted lips showing a small edge of upper teeth; relaxed mouth.",
-      "source_hair_description": "medium-long hair."
+      "source_hair_description": "medium-long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          260,
+          254,
+          760,
+          666
+        ],
+        "review_note": "Complete crown with a small margin; rectangle includes brows under thin fringe and the full tapered jaw."
+      }
     },
     {
       "id": "f000fa12e8d",
@@ -1640,7 +2190,18 @@
       },
       "hair_color": "Chestnut brown",
       "expression_description": "Soft closed-mouth smile; no teeth visible.",
-      "source_hair_description": "long hair."
+      "source_hair_description": "long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          280,
+          280,
+          758,
+          676
+        ],
+        "review_note": "Complete swept crown with background above; rectangle includes exposed forehead and complete chin."
+      }
     },
     {
       "id": "f0f2ab70e92",
@@ -1672,7 +2233,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Broad parted-lip smile showing upper teeth, with lifted cheeks.",
-      "source_hair_description": "long hair."
+      "source_hair_description": "long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          238,
+          254,
+          800,
+          704
+        ],
+        "review_note": "Crown is cropped at the upper edge; rectangle retains fringe-covered brows, smiling cheeks and full chin."
+      }
     },
     {
       "id": "f38f39acefd",
@@ -1704,7 +2276,18 @@
       },
       "hair_color": "Black",
       "expression_description": "Relaxed slightly parted lips; no prominent teeth visible.",
-      "source_hair_description": "long hair."
+      "source_hair_description": "long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          245,
+          280,
+          755,
+          670
+        ],
+        "review_note": "Complete crown with upper margin; full fringe overlaps brow area, and the complete jaw is protected."
+      }
     },
     {
       "id": "f45f1e8b9e7",
@@ -1736,7 +2319,18 @@
       },
       "hair_color": "Black",
       "expression_description": "Slightly parted lips with upper tooth edges visible; relaxed mouth.",
-      "source_hair_description": "long hair."
+      "source_hair_description": "long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          262,
+          264,
+          765,
+          662
+        ],
+        "review_note": "Complete crown with upper margin; rectangle includes brows beneath separated fringe and full chin."
+      }
     },
     {
       "id": "f4b555898f6",
@@ -1768,7 +2362,18 @@
       },
       "hair_color": "Auburn",
       "expression_description": "Bright parted-lip smile showing upper teeth.",
-      "source_hair_description": "long hair."
+      "source_hair_description": "long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          242,
+          274,
+          750,
+          658
+        ],
+        "review_note": "Complete crown with a narrow margin; rectangle includes brow area and full smiling jaw beneath side fringe."
+      }
     },
     {
       "id": "f86cb5e3fe0",
@@ -1800,7 +2405,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Relaxed parted lips with a narrow edge of upper teeth visible.",
-      "source_hair_description": "long hair."
+      "source_hair_description": "long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          240,
+          314,
+          795,
+          756
+        ],
+        "review_note": "Complete crown with a small margin; swept fringe overlaps forehead while full cheeks and chin remain inside."
+      }
     },
     {
       "id": "f8a214669b3",
@@ -1832,7 +2448,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Broad parted-lip smile showing upper teeth, with narrowed eyes.",
-      "source_hair_description": "long hair."
+      "source_hair_description": "long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          240,
+          224,
+          778,
+          672
+        ],
+        "review_note": "Crown is cropped at the upper edge; rectangle includes brows between curtain strands and full smiling chin."
+      }
     },
     {
       "id": "fe1b0b63a01",
@@ -1864,7 +2491,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Broad parted-lip smile showing upper teeth and lifted cheeks.",
-      "source_hair_description": "long hair."
+      "source_hair_description": "long hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": true,
+        "face_bbox_norm_xyxy": [
+          222,
+          258,
+          788,
+          748
+        ],
+        "review_note": "Complete crown with a small margin; rectangle protects exposed brow area, broad smiling cheeks and full jaw."
+      }
     },
     {
       "id": "f1de83b5df8",
@@ -1896,7 +2534,18 @@
       },
       "hair_color": "Dark brown",
       "expression_description": "Gentle closed-mouth smile; no teeth visible.",
-      "source_hair_description": "short bob bangs hair."
+      "source_hair_description": "short bob bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          218,
+          284,
+          795,
+          738
+        ],
+        "review_note": "Crown is cut by the upper photograph edge; rectangle includes brows, cheeks and full chin beneath the swept fringe."
+      }
     },
     {
       "id": "fdff1a18c78",
@@ -1928,7 +2577,18 @@
       },
       "hair_color": "Brown",
       "expression_description": "Parted-lip smile showing upper teeth.",
-      "source_hair_description": "short bob straight bangs hair."
+      "source_hair_description": "short bob straight bangs hair.",
+      "reference_framing": {
+        "schema_version": 1,
+        "crown_complete": false,
+        "face_bbox_norm_xyxy": [
+          245,
+          226,
+          775,
+          676
+        ],
+        "review_note": "Crown is cut by the upper photograph edge; rectangle includes forehead above brows and the complete jaw."
+      }
     }
   ]
 }

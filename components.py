@@ -50,6 +50,28 @@ class MOSSCharacterSettings:
         return (json.dumps(validate_character(values), ensure_ascii=False),)
 
 
+class MOSSReferenceCharacterSettings:
+    """Reference-preserving cards expose only controls that do not contradict the face."""
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {'required': {
+            'body_shape': (['slim','average','athletic','curvy','broad'],),
+            'face_description': ('STRING', {'forceInput': True}),
+            'reference_hair': ('STRING', {'forceInput': True}),
+        }}
+    RETURN_TYPES=('STRING',)
+    RETURN_NAMES=('character',)
+    FUNCTION='build'
+    CATEGORY='MOSS-Image/Character Studio'
+
+    def build(self, body_shape, face_description, reference_hair):
+        return MOSSCharacterSettings().build(age_mode='From face selection', age=25,
+            presentation='From face selection', body_shape=body_shape,
+            hair_style='From face selection', hair_color='From face selection',
+            expression='From face selection', extra_character_details='',
+            face_description=face_description, reference_hair=reference_hair)
+
+
 class MOSSCharacterCardComposer:
     @classmethod
     def INPUT_TYPES(cls) -> dict:

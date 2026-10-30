@@ -91,3 +91,43 @@ semantic version for each new Registry release. Without the secret, the workflow
 reports that publication was skipped; a green setup run is not a published version.
 
 See https://docs.comfy.org/registry/publishing for the official instructions.
+
+
+## Regional editing (1.3.0)
+
+Requires native MOSS support in ComfyUI 0.43.0 or newer. The new nodes reuse an
+installed original MOSS HF snapshot and armV5; they do not download or duplicate
+model weights. `MOSS HF Snapshot - Native` resolves a snapshot name under
+`ComfyUI/models/diffusers/` and exposes the native model, encoder and VAE.
+
+`Card Edit Region - JSON and Mask` creates a real sampling mask from the same
+validated card region/bbox used by the JSON. **Protect box** edits around the box;
+turn it off to edit inside it. `Card Region - Local Sampling` crops the latent,
+mask and reference to exactly matching coordinates and dimensions.
+`Card Region - Restore Canvas Latent` restores protected and outside latent values
+before one complete-canvas VAE decode. No foreground segmentation or final-image
+face replacement is performed.
+
+The face library now includes individually reviewed face rectangles for 60
+portraits. `Portrait Reference Placement` transforms each rectangle through the
+same uniform center-crop/placement used for the whole reference photograph.
+Connect its suggested box to native `Create Bounding Boxes` to inspect/adjust it.
+The native interactive editor requires the **Nodes 2.0** canvas setting.
+Personal uploads without reviewed metadata require a manually drawn protection
+box; the node refuses to guess one. `Reference Character - Preserve Face and
+Expression` inherits appearance and expression and exposes only body shape.
+
+Keep the full-card generation JSON separate from the short local edit instruction.
+The **Selected outfit** mode derives only the selected view's garment description;
+it never copies the face geometry description into an editing instruction. Both
+positive and negative MOSS reference encoders must receive the exact local crop,
+without independently resizing it to a different megapixel target.
+
+Protected-face editing retained the original facial features and expressions in
+three reviewed reference cases, including an identity outside the continuation
+training set, and in the integrated four-panel workflow. This preserves a face
+at its existing placement; it does not validate freely changing its pose or
+expression. Crown outpainting remains unreliable for cropped references. Native
+outputs can retain pale portrait-edge halos, neck remnants, and outfit/privacy
+rendering errors. The experimental continuation remains separate from the text
+workflow and is not bundled as a published model.

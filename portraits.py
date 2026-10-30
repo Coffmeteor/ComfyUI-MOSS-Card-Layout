@@ -68,7 +68,8 @@ class MOSSFaceLibrary:
     def INPUT_TYPES(cls) -> dict:
         return {'required':{'face_id':('STRING',{'default':'f71f980dde3'}),
                             'description_override':('STRING',{'default':'','multiline':True})}}
-    RETURN_TYPES=('IMAGE','STRING','STRING');RETURN_NAMES=('reference_image','face_description','reference_hair')
+    RETURN_TYPES=('IMAGE','STRING','STRING','STRING')
+    RETURN_NAMES=('reference_image','face_description','reference_hair','reference_framing')
     FUNCTION='build';CATEGORY='MOSS-Image/Character Studio'
 
     @classmethod
@@ -90,4 +91,6 @@ class MOSSFaceLibrary:
         with Image.open(image_path(face_id)) as source:
             image=ImageOps.exif_transpose(source).convert('RGB')
             array=np.asarray(image,dtype=np.float32)/255.0
-        return torch.from_numpy(array)[None,],description,entry.get('hair_description','')
+        framing=json.dumps({'asset_id':face_id,'label':entry.get('label','Reference face'),
+            'framing':entry.get('reference_framing')},ensure_ascii=False,separators=(',',':'))
+        return torch.from_numpy(array)[None,],description,entry.get('hair_description',''),framing

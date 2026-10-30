@@ -68,19 +68,56 @@ NODE_DISPLAY_NAME_MAPPINGS = {"MOSSAutoThreeViewCard": "MOSS Three-View Card - A
 WEB_DIRECTORY = "./web"
 register_routes()
 
-from .components import MOSSOutfitLibrary, MOSSCharacterSettings, MOSSCharacterCardComposer
+from .components import MOSSOutfitLibrary, MOSSCharacterSettings, MOSSCharacterCardComposer, MOSSReferenceCharacterSettings
 from .portraits import MOSSFaceLibrary
+from .edit_region import MOSSCardEditRegion, MOSSCardPortraitSetup, MOSSExistingCardLayout
+from .latent_region import MOSSLatentRegionCrop, MOSSLatentRegionMerge
 from .library_routes import register_routes as register_library_routes
 NODE_CLASS_MAPPINGS.update({
     "MOSSFaceLibrary": MOSSFaceLibrary,
     "MOSSOutfitLibrary": MOSSOutfitLibrary,
     "MOSSCharacterSettings": MOSSCharacterSettings,
+    "MOSSReferenceCharacterSettings": MOSSReferenceCharacterSettings,
     "MOSSCharacterCardComposer": MOSSCharacterCardComposer,
+    "MOSSCardEditRegion": MOSSCardEditRegion,
+    "MOSSCardPortraitSetup": MOSSCardPortraitSetup,
+    "MOSSExistingCardLayout": MOSSExistingCardLayout,
+    "MOSSLatentRegionCrop": MOSSLatentRegionCrop,
+    "MOSSLatentRegionMerge": MOSSLatentRegionMerge,
 })
 NODE_DISPLAY_NAME_MAPPINGS.update({
     "MOSSFaceLibrary": "Face Library",
     "MOSSOutfitLibrary": "Outfit Library",
     "MOSSCharacterSettings": "Character Settings",
+    "MOSSReferenceCharacterSettings": "Reference Character - Preserve Face and Expression",
     "MOSSCharacterCardComposer": "Four-Panel Card Settings",
+    "MOSSCardEditRegion": "Card Edit Region - JSON and Mask",
+    "MOSSCardPortraitSetup": "Portrait Reference Placement",
+    "MOSSExistingCardLayout": "Existing Card Layout",
+    "MOSSLatentRegionCrop": "Card Region - Local Sampling",
+    "MOSSLatentRegionMerge": "Card Region - Restore Canvas Latent",
 })
 register_library_routes()
+
+
+class MOSSStudioHFLoader:
+    """Reuse an installed HF snapshot with native Comfy model execution."""
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {"model_path": ("STRING", {"default": "MOSS-Image-SFT"})}}
+    RETURN_TYPES=("MODEL", "CLIP", "VAE")
+    FUNCTION="load"
+    CATEGORY="MOSS-Image/Native"
+
+    def load(self, model_path):
+        from pathlib import Path
+        import folder_paths
+        from .native_hf import MOSSNativeHFLoader
+        path=Path(model_path).expanduser()
+        if not path.is_absolute():
+            path=Path(folder_paths.models_dir)/"diffusers"/path
+        return MOSSNativeHFLoader().load(str(path))
+
+
+NODE_CLASS_MAPPINGS["MOSSStudioHFLoader"]=MOSSStudioHFLoader
+NODE_DISPLAY_NAME_MAPPINGS["MOSSStudioHFLoader"]="MOSS HF Snapshot - Native"
