@@ -23,7 +23,7 @@ def read_catalog() -> dict[str, Any]:
     return _read_catalog(str(CATALOG), stat.st_mtime_ns, stat.st_size)
 
 
-def resolve(request: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any] | None]:
+def resolve(request: dict[str, Any], entry: dict | None = None) -> tuple[dict[str, Any], dict[str, Any] | None]:
     """Replace explicit wardrobe slots; preserve character and layout instructions."""
     request = dict(request)
     identifier = request.pop("outfit_id", "")
@@ -36,7 +36,7 @@ def resolve(request: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any] | N
             raise ValueError("Wardrobe caption slots require outfit_id")
         return request, None
     catalog = read_catalog()
-    entry = next((x for x in catalog["entries"] if x["id"] == identifier), None)
+    entry = entry if entry is not None and entry["id"] == identifier else next((x for x in catalog["entries"] if x["id"] == identifier), None)
     if entry is None:
         raise ValueError(f"Unknown outfit_id: {identifier}; select an ID from the costume gallery")
     for key, token in (("portrait_caption", PORTRAIT), ("front_caption", OUTFIT), ("back_caption", OUTFIT)):
@@ -48,7 +48,7 @@ def resolve(request: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any] | N
             request[key] = text.replace(OUTFIT, entry["description"]).replace(PORTRAIT, entry["portrait_description"])
     provenance = {"id": identifier, "category": entry["category"], "catalog": str(CATALOG),
                   "catalog_sha256": hashlib.sha256(CATALOG.read_bytes()).hexdigest(),
-                  "source_image": entry["image_url"], "source_image_sha256": entry["source_image_sha256"],
+                  "source_image": entry.get("image_url", "user-library:" + identifier), "source_image_sha256": entry["source_image_sha256"],
                   "description": entry["description"], "portrait_description": entry["portrait_description"]}
     return request, provenance
 

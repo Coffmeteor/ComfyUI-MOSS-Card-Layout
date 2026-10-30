@@ -12,6 +12,7 @@ from io import BytesIO
 from pathlib import Path
 from types import ModuleType
 from .labels import describe
+from . import user_library
 
 
 def library() -> ModuleType:
@@ -22,6 +23,8 @@ def library() -> ModuleType:
 
 def get_entry(identifier: str) -> dict:
     identifier = identifier.strip().upper()
+    if identifier.startswith("USER-"):
+        return user_library.get("outfits", identifier)
     entry = next((e for e in library().read_catalog()["entries"] if e["id"] == identifier), None)
     if entry is None:
         raise ValueError(f"Unknown outfit_id: {identifier}")
@@ -31,7 +34,7 @@ def get_entry(identifier: str) -> dict:
 def public_catalog() -> dict:
     # Do not publish filesystem paths through the browser API.
     keys = ("id", "category", "keywords", "description", "portrait_description")
-    return {"entries": [({k: e[k] for k in keys} | describe(e)) for e in library().read_catalog()["entries"]]}
+    return {"entries": [dict(e, facets=describe(e)["facets"]) for e in user_library.entries("outfits")] + [({k: e[k] for k in keys} | describe(e)) for e in library().read_catalog()["entries"]]}
 
 
 @lru_cache(maxsize=128)
@@ -51,6 +54,8 @@ _LOCKS = [threading.Lock() for _ in range(64)]
 
 def image_path(identifier: str) -> Path:
     entry = get_entry(identifier)
+    if entry["id"].startswith("USER-"):
+        return user_library.image_path("outfits", entry["id"])
     import folder_paths
     root = Path(folder_paths.get_user_directory()) / "moss-card-layout/images"
     root.mkdir(parents=True, exist_ok=True)

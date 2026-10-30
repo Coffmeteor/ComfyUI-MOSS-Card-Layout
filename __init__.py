@@ -1,6 +1,6 @@
 """Automatic text-only MOSS card geometry and optional wardrobe browsing."""
 from .layout import build_layout, build_four_view_layout, CAPTIONS
-from .wardrobe import library, register_routes
+from .wardrobe import library, register_routes, get_entry
 
 
 class MOSSAutoThreeViewCard:
@@ -41,7 +41,7 @@ class MOSSFourViewWardrobeCard(MOSSAutoFourViewCard):
     @classmethod
     def IS_CHANGED(cls, **kwargs) -> str:
         import hashlib
-        return hashlib.sha256(library().CATALOG.read_bytes()).hexdigest()
+        return hashlib.sha256((library().CATALOG.read_bytes() + str(get_entry(kwargs["outfit_id"])).encode()) if kwargs.get("outfit_id") else library().CATALOG.read_bytes()).hexdigest()
 
     @classmethod
     def INPUT_TYPES(cls) -> dict:
@@ -54,7 +54,7 @@ class MOSSFourViewWardrobeCard(MOSSAutoFourViewCard):
 
     def build(self, long_edge: int, short_edge: int, privacy_blocks: bool,
               outfit_id: str, **captions: str) -> tuple[str, int, int]:
-        resolved, _ = library().resolve(dict(captions, outfit_id=outfit_id))
+        resolved, _ = library().resolve(dict(captions, outfit_id=outfit_id), entry=get_entry(outfit_id))
         return super().build(long_edge, short_edge, privacy_blocks, **resolved)
 
 
@@ -67,3 +67,20 @@ NODE_DISPLAY_NAME_MAPPINGS = {"MOSSAutoThreeViewCard": "MOSS Three-View Card - A
 
 WEB_DIRECTORY = "./web"
 register_routes()
+
+from .components import MOSSOutfitLibrary, MOSSCharacterSettings, MOSSCharacterCardComposer
+from .portraits import MOSSFaceLibrary
+from .library_routes import register_routes as register_library_routes
+NODE_CLASS_MAPPINGS.update({
+    "MOSSFaceLibrary": MOSSFaceLibrary,
+    "MOSSOutfitLibrary": MOSSOutfitLibrary,
+    "MOSSCharacterSettings": MOSSCharacterSettings,
+    "MOSSCharacterCardComposer": MOSSCharacterCardComposer,
+})
+NODE_DISPLAY_NAME_MAPPINGS.update({
+    "MOSSFaceLibrary": "Face Library",
+    "MOSSOutfitLibrary": "Outfit Library",
+    "MOSSCharacterSettings": "Character Settings",
+    "MOSSCharacterCardComposer": "Four-Panel Card Settings",
+})
+register_library_routes()
