@@ -1,7 +1,7 @@
 # MOSS Character Studio
 
 ComfyUI nodes for three/four-panel character cards, including a searchable
-1,407-outfit wardrobe and 893-face library with live thumbnail previews,
+visually curated 100-outfit wardrobe and 60-face library with live thumbnail previews,
 editable character controls and a persistent personal library.
 
 ## Install
@@ -10,7 +10,7 @@ In ComfyUI Manager, use Install via Git URL:
 https://github.com/Coffmeteor/ComfyUI-MOSS-Card-Layout
 
 Restart ComfyUI and refresh the browser. Existing users update this node pack
-once to version 1.1.0 to get the Character Studio components. Registry/Manager search listing is pending;
+to version 1.2.0 to get structured prompt fields and the aligned workflows. Registry/Manager search listing is pending;
 Git URL installation works independently of registry approval.
 
 The prompt catalog ships with the node. Gallery images download automatically
@@ -23,7 +23,7 @@ The images remain third-party assets under the source site's terms.
 ## Use
 
 Open **Character Studio - Text.json** from `example_workflows`. The top row
-contains Face, Character and Outfit; Result and generation sections sit below.
+contains aligned Face, Character/Card and Outfit sections. The actual final JSON, Result and a separate Advanced generation section sit below.
 
 1. Click **Choose face**, search features or combine hair/face-shape tags, then
    click a thumbnail. This text route uses derived descriptions to generate a
@@ -36,17 +36,24 @@ contains Face, Character and Outfit; Result and generation sections sit below.
 4. Choose dimensions, lighting and the privacy switch in **Four-Panel Card
    Settings**, then run. Change a component and run again to regenerate the card.
 
-The panels remain portrait, independent anatomy reference, clothed front and
-clothed back. Body panels retain headless/neckless instructions; short neck
-sections can still appear. Privacy blocks are generated and require review.
+The component prompt contract is version 2. See [field ownership and validation](PROMPT_CONTRACT.md).
+New items with conflicting spatial fields fail before generation. The previous
+first-sentence clothing extractor is retired.
+
+The requested panels are portrait, independent anatomy reference, clothed front and
+clothed back. Output acceptance remains unresolved: body panels can retain full heads
+or neck sections, anatomy panels can inherit shoes, and generated privacy shapes
+can differ from the requested rectangles. Review the native output; the component
+schema validates prompts, not these pixel-level requirements.
 The older **Four View Visual Wardrobe** workflow remains supported.
 
 ### Add your own faces or outfits
 
 Click **Add my own**, choose a PNG/JPEG/WebP (up to 16 MB and 32 megapixels),
-then enter a name, tags and short description. For faces, describe facial details
-and hair separately; for outfits, provide full clothing and upper-body clothing
-separately. Descriptions are entered manually; this node pack does not run a
+then enter a name, tags and short description. For faces, describe facial details,
+hairstyle, hair color and expression separately. For outfits, enter shared garment identity, front-only details,
+known back-only details and portrait clothing. Add asymmetric features with a
+wearer-side selector and front/back visibility; no JSON editing is required. Descriptions are entered manually; this node pack does not run a
 captioning model for uploaded images. The saved item is selected automatically.
 Use **My library** to find it later. **Edit**, **Remove** and **Undo remove** are
 available on your own items. IDs are internal and never needed for normal use.
@@ -61,22 +68,17 @@ does not transfer personal images. Uploads stay on the ComfyUI server.
 
 This package supplies selection, library and layout nodes. Text generation
 requires the existing MOSS HF integration, original SFT model and sixteen-step
-accelerator. Choose their installed paths in the generation section. It does not
+accelerator. Replace the example HF-directory placeholder `MOSS-Image-SFT` with your installed absolute HF directory and choose the installed accelerator in the generation section. It does not
 install model weights or replace their licenses.
 
-Reference-editing tests showed substantial facial identity drift, including
-single-portrait edits and the original editing adapter. Those local editing
-weights and workflow entries were retired. The released workflow uses text
-conditioning only and does not promise identity preservation.
+The released workflow uses text conditioning. Experimental armV5 reference-card workflows are separate: local clothing edits can retain a reference face, while rebuilding a four-panel card can change facial features or body framing. Reference-card quality is being evaluated independently of this library package.
 
 ### Face source
 
 Face metadata comes from https://ai-portrait-gallery.pages.dev/. Images are
 fetched from the source on demand and cached under
 `ComfyUI/user/moss-card-layout/portraits`; they are not redistributed in this
-repository. Thumbnail hashes and full-image byte counts are checked. The 893
-face descriptions were reconstructed locally with Qwen3-VL-4B-Instruct; they
-are not the source creator's original prompts. Source gallery terms apply.
+repository. Thumbnail hashes and full-image byte counts are checked. The 60 selected faces and 100 selected outfits were visually reviewed and manually rewritten into independent fields. Original reconstructed captions remain in source-provenance fields; these are not the source creator's original generation prompts. Source gallery terms apply.
 
 ## Publishing
 

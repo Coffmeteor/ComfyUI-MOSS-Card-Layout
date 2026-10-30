@@ -45,10 +45,14 @@ def resolve(request: dict[str, Any], entry: dict | None = None) -> tuple[dict[st
     for key in keys:
         text = request.get(key)
         if isinstance(text, str):
-            request[key] = text.replace(OUTFIT, entry["description"]).replace(PORTRAIT, entry["portrait_description"])
+            view = "back_description" if key == "back_caption" else "front_description"
+            request[key] = text.replace(OUTFIT, entry.get(view, entry.get("body_description", entry["description"]))).replace(PORTRAIT, entry["portrait_description"])
     provenance = {"id": identifier, "category": entry["category"], "catalog": str(CATALOG),
                   "catalog_sha256": hashlib.sha256(CATALOG.read_bytes()).hexdigest(),
                   "source_image": entry.get("image_url", "user-library:" + identifier), "source_image_sha256": entry["source_image_sha256"],
-                  "description": entry["description"], "portrait_description": entry["portrait_description"]}
+                  "description": entry["description"], "portrait_description": entry["portrait_description"],
+                  "front_description": entry.get("front_description", entry["description"]),
+                  "back_description": entry.get("back_description", entry["description"]),
+                  "outfit_spec": entry.get("outfit_spec")}
     return request, provenance
 

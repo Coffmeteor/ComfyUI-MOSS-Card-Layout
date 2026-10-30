@@ -1,0 +1,23 @@
+{
+  "prompt_contract_version": 2,
+  "source_counts": {
+    "outfits": 1407,
+    "faces": 893
+  },
+  "selected_counts": {
+    "outfits": 100,
+    "faces": 60
+  },
+  "review_method": "GPT-6.1 Sol visually inspected enlarged source-image sheets and ambiguous originals, selected diverse entries, and manually authored independent prompt fields. No automated recaptioning was used for the selected records.",
+  "selection_coverage": "Eight outfit categories; garment layers, cuts, materials, asymmetric details, footwear and accessories; four hairstyle-length groups with varied cuts and expressions.",
+  "validation": {
+    "outfit_specs": 100,
+    "face_specs": 60,
+    "rendered_outfit_views": 200,
+    "verified_source_image_hashes": 160,
+    "required_default_and_current_ids_retained": true,
+    "physical_asymmetries_persist_in_both_views": true
+  },
+  "source_images": "Images remain on the original gallery hosts and are downloaded on demand; no gallery image files are redistributed.",
+  "provenance": "Original captions remain in source_description/source_hair_description fields. Source IDs, URLs and image hashes are retained."
+}

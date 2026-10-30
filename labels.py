@@ -24,4 +24,6 @@ def describe(entry: dict) -> dict:
     color = next(iter(facets['Color']), '')
     material = next(iter(facets['Material']), '')
     label = ' '.join(x for x in (color, material.lower(), garment.lower()) if x).strip().capitalize()
-    return {'label': label, 'tags': [tag for tags in facets.values() for tag in tags], 'facets': facets}
+    return {'label': entry.get('label') or label,
+            'tags': list(dict.fromkeys([*entry.get('tags', []), *(tag for tags in facets.values() for tag in tags)])),
+            'facets': facets}

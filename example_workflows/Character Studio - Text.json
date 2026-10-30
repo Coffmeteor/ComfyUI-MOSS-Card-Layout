@@ -1,52 +1,84 @@
 {
-  "id": "4cbd0b64-4203-47f8-bee2-d02d6a99a2d7",
+  "id": "4414f3ed-0510-4e0a-bcf1-56c68d42d4d2",
   "revision": 0,
-  "last_node_id": 43,
-  "last_link_id": 38,
+  "last_node_id": 44,
+  "last_link_id": 20,
   "nodes": [
     {
       "id": 1,
       "type": "MOSSImageHFLoader",
       "pos": [
         0,
-        1870
+        2310
       ],
       "size": [
-        380,
-        180
+        440,
+        200
       ],
       "flags": {},
       "order": 0,
       "mode": 0,
-      "inputs": [],
+      "inputs": [
+        {
+          "localized_name": "model_path",
+          "name": "model_path",
+          "type": "STRING",
+          "widget": {
+            "name": "model_path"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "weight_dtype",
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "text_device",
+          "name": "text_device",
+          "type": "COMBO",
+          "widget": {
+            "name": "text_device"
+          },
+          "link": null
+        }
+      ],
       "outputs": [
         {
+          "localized_name": "MODEL",
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            33
+            14
           ]
         },
         {
+          "localized_name": "CLIP",
           "name": "CLIP",
           "type": "CLIP",
           "links": [
-            21,
-            22
+            2,
+            3
           ]
         },
         {
+          "localized_name": "VAE",
           "name": "VAE",
           "type": "VAE",
           "links": [
-            31
+            12
           ]
         }
       ],
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "MOSSImageHFLoader"
       },
@@ -65,37 +97,40 @@
       "id": 4,
       "type": "CLIPTextEncode",
       "pos": [
-        1240,
-        1870
+        0,
+        2640
       ],
       "size": [
-        380,
-        180
+        440,
+        240
       ],
       "flags": {},
-      "order": 8,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "clip",
           "name": "clip",
           "type": "CLIP",
-          "link": 21
+          "link": 2
         },
         {
+          "localized_name": "text",
           "name": "text",
           "type": "STRING",
           "widget": {
             "name": "text"
           },
-          "link": 20
+          "link": 1
         }
       ],
       "outputs": [
         {
+          "localized_name": "CONDITIONING",
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            27
+            8
           ]
         }
       ],
@@ -103,7 +138,8 @@
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "CLIPTextEncode"
       },
@@ -118,29 +154,40 @@
       "id": 5,
       "type": "CLIPTextEncode",
       "pos": [
-        1240,
-        2120
+        500,
+        2640
       ],
       "size": [
-        380,
-        150
+        440,
+        240
       ],
       "flags": {},
       "order": 4,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "clip",
           "name": "clip",
           "type": "CLIP",
-          "link": 22
+          "link": 3
+        },
+        {
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "CONDITIONING",
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            28
+            9
           ]
         }
       ],
@@ -148,7 +195,8 @@
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "CLIPTextEncode"
       },
@@ -163,47 +211,60 @@
       "id": 6,
       "type": "EmptyFlux2LatentImage",
       "pos": [
-        920,
-        2120
+        1000,
+        2640
       ],
       "size": [
-        260,
-        150
+        440,
+        160
       ],
       "flags": {},
       "order": 9,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "width",
           "name": "width",
           "type": "INT",
           "widget": {
             "name": "width"
           },
-          "link": 23
+          "link": 4
         },
         {
+          "localized_name": "height",
           "name": "height",
           "type": "INT",
           "widget": {
             "name": "height"
           },
-          "link": 24
+          "link": 5
+        },
+        {
+          "localized_name": "batch_size",
+          "name": "batch_size",
+          "type": "INT",
+          "widget": {
+            "name": "batch_size"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "LATENT",
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            29
+            10
           ]
         }
       ],
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "EmptyFlux2LatentImage"
       },
@@ -222,29 +283,40 @@
       "id": 15,
       "type": "ModelSamplingSD3",
       "pos": [
-        920,
-        1870
+        1000,
+        2310
       ],
       "size": [
-        260,
-        120
+        440,
+        160
       ],
       "flags": {},
       "order": 6,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 25
+          "link": 6
+        },
+        {
+          "localized_name": "shift",
+          "name": "shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "shift"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "MODEL",
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            26
+            7
           ]
         }
       ],
@@ -252,7 +324,8 @@
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "ModelSamplingSD3"
       },
@@ -267,51 +340,111 @@
       "id": 16,
       "type": "KSampler",
       "pos": [
-        1700,
-        1870
+        0,
+        2990
       ],
       "size": [
-        360,
-        390
+        440,
+        310
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 26
+          "link": 7
         },
         {
+          "localized_name": "positive",
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 27
+          "link": 8
         },
         {
+          "localized_name": "negative",
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 28
+          "link": 9
         },
         {
+          "localized_name": "latent_image",
           "name": "latent_image",
           "type": "LATENT",
-          "link": 29
+          "link": 10
+        },
+        {
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "steps",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "sampler_name",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "scheduler",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "denoise",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "LATENT",
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            30
+            11
           ]
         }
       ],
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "KSampler"
       },
@@ -338,41 +471,45 @@
       "id": 17,
       "type": "VAEDecode",
       "pos": [
-        2120,
-        1870
+        500,
+        2990
       ],
       "size": [
-        280,
-        120
+        440,
+        160
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "samples",
           "name": "samples",
           "type": "LATENT",
-          "link": 30
+          "link": 11
         },
         {
+          "localized_name": "vae",
           "name": "vae",
           "type": "VAE",
-          "link": 31
+          "link": 12
         }
       ],
       "outputs": [
         {
+          "localized_name": "IMAGE",
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            32
+            13
           ]
         }
       ],
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "VAEDecode"
       }
@@ -382,24 +519,35 @@
       "type": "SaveImage",
       "pos": [
         0,
-        950
+        1240
       ],
       "size": [
-        1150,
-        700
+        1440,
+        850
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
-          "link": 32
+          "link": 13
+        },
+        {
+          "localized_name": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
           "links": null
@@ -408,7 +556,8 @@
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "SaveImage"
       },
@@ -423,36 +572,57 @@
       "id": 21,
       "type": "LoraLoaderModelOnly",
       "pos": [
-        440,
-        1870
+        500,
+        2310
       ],
       "size": [
-        420,
-        180
+        440,
+        160
       ],
       "flags": {},
       "order": 3,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "model",
           "name": "model",
           "type": "MODEL",
-          "link": 33
+          "link": 14
+        },
+        {
+          "localized_name": "lora_name",
+          "name": "lora_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "lora_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "strength_model",
+          "name": "strength_model",
+          "type": "FLOAT",
+          "widget": {
+            "name": "strength_model"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "MODEL",
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            25
+            6
           ]
         }
       ],
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "LoraLoaderModelOnly"
       },
@@ -469,35 +639,84 @@
       "id": 40,
       "type": "MOSSCharacterCardComposer",
       "pos": [
-        400,
-        540
+        500,
+        460
       ],
       "size": [
-        350,
-        230
+        440,
+        220
       ],
       "flags": {},
       "order": 7,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "character",
           "name": "character",
           "type": "STRING",
-          "link": 34
+          "link": 15
         },
         {
+          "localized_name": "outfit_description",
           "name": "outfit_description",
           "type": "STRING",
-          "link": 35
+          "link": 16
         },
         {
+          "localized_name": "portrait_clothing",
           "name": "portrait_clothing",
           "type": "STRING",
-          "link": 36
+          "link": 17
+        },
+        {
+          "localized_name": "long_edge",
+          "name": "long_edge",
+          "type": "INT",
+          "widget": {
+            "name": "long_edge"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "short_edge",
+          "name": "short_edge",
+          "type": "INT",
+          "widget": {
+            "name": "short_edge"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "privacy_blocks",
+          "name": "privacy_blocks",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "privacy_blocks"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "lighting",
+          "name": "lighting",
+          "type": "COMBO",
+          "widget": {
+            "name": "lighting"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "reference_identity",
+          "name": "reference_identity",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "reference_identity"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "layout_json",
           "name": "layout_json",
           "type": "STRING",
           "links": [
@@ -505,17 +724,19 @@
           ]
         },
         {
+          "localized_name": "width",
           "name": "width",
           "type": "INT",
           "links": [
-            23
+            4
           ]
         },
         {
+          "localized_name": "height",
           "name": "height",
           "type": "INT",
           "links": [
-            24
+            5
           ]
         }
       ],
@@ -523,7 +744,8 @@
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "MOSSCharacterCardComposer"
       },
@@ -547,34 +769,56 @@
       "type": "MOSSFaceLibrary",
       "pos": [
         0,
-        100
+        80
       ],
       "size": [
-        350,
+        440,
         540
       ],
       "flags": {},
       "order": 1,
       "mode": 0,
-      "inputs": [],
+      "inputs": [
+        {
+          "localized_name": "face_id",
+          "name": "face_id",
+          "type": "STRING",
+          "widget": {
+            "name": "face_id"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "description_override",
+          "name": "description_override",
+          "type": "STRING",
+          "widget": {
+            "name": "description_override"
+          },
+          "link": null
+        }
+      ],
       "outputs": [
         {
+          "localized_name": "reference_image",
           "name": "reference_image",
           "type": "IMAGE",
           "links": null
         },
         {
+          "localized_name": "face_description",
           "name": "face_description",
           "type": "STRING",
           "links": [
-            37
+            18
           ]
         },
         {
+          "localized_name": "reference_hair",
           "name": "reference_hair",
           "type": "STRING",
           "links": [
-            38
+            19
           ]
         }
       ],
@@ -582,7 +826,8 @@
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "MOSSFaceLibrary"
       },
@@ -601,34 +846,109 @@
       "id": 42,
       "type": "MOSSCharacterSettings",
       "pos": [
-        400,
-        100
+        500,
+        80
       ],
       "size": [
-        350,
-        360
+        440,
+        310
       ],
       "flags": {},
       "order": 5,
       "mode": 0,
       "inputs": [
         {
+          "localized_name": "face_description",
           "name": "face_description",
           "type": "STRING",
-          "link": 37
+          "link": 18
         },
         {
+          "localized_name": "reference_hair",
           "name": "reference_hair",
           "type": "STRING",
-          "link": 38
+          "link": 19
+        },
+        {
+          "localized_name": "age_mode",
+          "name": "age_mode",
+          "type": "COMBO",
+          "widget": {
+            "name": "age_mode"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "age",
+          "name": "age",
+          "type": "INT",
+          "widget": {
+            "name": "age"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "presentation",
+          "name": "presentation",
+          "type": "COMBO",
+          "widget": {
+            "name": "presentation"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "body_shape",
+          "name": "body_shape",
+          "type": "COMBO",
+          "widget": {
+            "name": "body_shape"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "hair_style",
+          "name": "hair_style",
+          "type": "COMBO",
+          "widget": {
+            "name": "hair_style"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "hair_color",
+          "name": "hair_color",
+          "type": "COMBO",
+          "widget": {
+            "name": "hair_color"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "expression",
+          "name": "expression",
+          "type": "COMBO",
+          "widget": {
+            "name": "expression"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "extra_character_details",
+          "name": "extra_character_details",
+          "type": "STRING",
+          "widget": {
+            "name": "extra_character_details"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
+          "localized_name": "character",
           "name": "character",
           "type": "STRING",
           "links": [
-            34
+            15
           ]
         }
       ],
@@ -636,7 +956,8 @@
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "MOSSCharacterSettings"
       },
@@ -665,30 +986,51 @@
       "id": 43,
       "type": "MOSSOutfitLibrary",
       "pos": [
-        800,
-        100
+        1000,
+        80
       ],
       "size": [
-        350,
+        440,
         540
       ],
       "flags": {},
       "order": 2,
       "mode": 0,
-      "inputs": [],
+      "inputs": [
+        {
+          "localized_name": "outfit_id",
+          "name": "outfit_id",
+          "type": "STRING",
+          "widget": {
+            "name": "outfit_id"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "extra_outfit_details",
+          "name": "extra_outfit_details",
+          "type": "STRING",
+          "widget": {
+            "name": "extra_outfit_details"
+          },
+          "link": null
+        }
+      ],
       "outputs": [
         {
+          "localized_name": "outfit_description",
           "name": "outfit_description",
           "type": "STRING",
           "links": [
-            35
+            16
           ]
         },
         {
+          "localized_name": "portrait_clothing",
           "name": "portrait_clothing",
           "type": "STRING",
           "links": [
-            36
+            17
           ]
         }
       ],
@@ -696,7 +1038,8 @@
       "properties": {
         "ue_properties": {
           "widget_ue_connectable": {},
-          "input_ue_unconnectable": {}
+          "input_ue_unconnectable": {},
+          "version": "7.8"
         },
         "Node name for S&R": "MOSSOutfitLibrary"
       },
@@ -710,19 +1053,63 @@
         "extra_outfit_details": "",
         "library_preview": ""
       }
+    },
+    {
+      "id": 44,
+      "type": "PreviewAny",
+      "pos": [
+        0,
+        850
+      ],
+      "size": [
+        1440,
+        220
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "source",
+          "name": "source",
+          "type": "*",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "STRING",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "title": "Final JSON sent to MOSS",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
     }
   ],
   "links": [
     [
-      20,
-      40,
+      1,
+      44,
       0,
       4,
       1,
       "STRING"
     ],
     [
-      21,
+      2,
       1,
       1,
       4,
@@ -730,7 +1117,7 @@
       "CLIP"
     ],
     [
-      22,
+      3,
       1,
       1,
       5,
@@ -738,7 +1125,7 @@
       "CLIP"
     ],
     [
-      23,
+      4,
       40,
       1,
       6,
@@ -746,7 +1133,7 @@
       "INT"
     ],
     [
-      24,
+      5,
       40,
       2,
       6,
@@ -754,7 +1141,7 @@
       "INT"
     ],
     [
-      25,
+      6,
       21,
       0,
       15,
@@ -762,7 +1149,7 @@
       "MODEL"
     ],
     [
-      26,
+      7,
       15,
       0,
       16,
@@ -770,7 +1157,7 @@
       "MODEL"
     ],
     [
-      27,
+      8,
       4,
       0,
       16,
@@ -778,7 +1165,7 @@
       "CONDITIONING"
     ],
     [
-      28,
+      9,
       5,
       0,
       16,
@@ -786,7 +1173,7 @@
       "CONDITIONING"
     ],
     [
-      29,
+      10,
       6,
       0,
       16,
@@ -794,7 +1181,7 @@
       "LATENT"
     ],
     [
-      30,
+      11,
       16,
       0,
       17,
@@ -802,7 +1189,7 @@
       "LATENT"
     ],
     [
-      31,
+      12,
       1,
       2,
       17,
@@ -810,7 +1197,7 @@
       "VAE"
     ],
     [
-      32,
+      13,
       17,
       0,
       18,
@@ -818,7 +1205,7 @@
       "IMAGE"
     ],
     [
-      33,
+      14,
       1,
       0,
       21,
@@ -826,7 +1213,7 @@
       "MODEL"
     ],
     [
-      34,
+      15,
       42,
       0,
       40,
@@ -834,7 +1221,7 @@
       "STRING"
     ],
     [
-      35,
+      16,
       43,
       0,
       40,
@@ -842,7 +1229,7 @@
       "STRING"
     ],
     [
-      36,
+      17,
       43,
       1,
       40,
@@ -850,7 +1237,7 @@
       "STRING"
     ],
     [
-      37,
+      18,
       41,
       1,
       42,
@@ -858,73 +1245,93 @@
       "STRING"
     ],
     [
-      38,
+      19,
       41,
       2,
       42,
       1,
+      "STRING"
+    ],
+    [
+      20,
+      40,
+      0,
+      44,
+      0,
       "STRING"
     ]
   ],
   "groups": [
     {
       "id": 1,
-      "title": "FACE \u00b7 DESCRIBE",
+      "title": "01  Face",
       "bounding": [
         -20,
-        20,
-        390,
-        790
+        0,
+        480,
+        730
       ],
-      "color": "#476681",
+      "color": "#405c78",
       "flags": {}
     },
     {
       "id": 2,
-      "title": "CHARACTER",
+      "title": "02  Character and card",
       "bounding": [
-        380,
-        20,
-        390,
-        790
+        480,
+        0,
+        480,
+        730
       ],
-      "color": "#6b587b",
+      "color": "#405c78",
       "flags": {}
     },
     {
       "id": 3,
-      "title": "OUTFIT",
+      "title": "03  Outfit",
       "bounding": [
-        780,
-        20,
-        390,
-        790
+        980,
+        0,
+        480,
+        730
       ],
-      "color": "#416f64",
+      "color": "#405c78",
       "flags": {}
     },
     {
       "id": 4,
-      "title": "RESULT",
+      "title": "04  Final prompt",
       "bounding": [
         -20,
-        870,
-        1190,
-        830
+        770,
+        1480,
+        350
       ],
-      "color": "#765e42",
+      "color": "#53645d",
       "flags": {}
     },
     {
       "id": 5,
-      "title": "GENERATION \u00b7 TEXT \u00b7 16 STEPS",
+      "title": "05  Result",
       "bounding": [
         -20,
-        1780,
-        2490,
-        600
+        1160,
+        1480,
+        990
       ],
-      "color": "#3c4652",
+      "color": "#53645d",
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "Advanced  Model and sampling",
+      "bounding": [
+        -20,
+        2230,
+        1480,
+        1140
+      ],
+      "color": "#555b66",
       "flags": {}
     }
   ],
@@ -932,17 +1339,12 @@
   "extra": {
     "ue_links": [],
     "ds": {
-      "scale": 0.85,
+      "scale": 0.65,
       "offset": [
-        120,
-        180
+        150,
+        280
       ]
-    },
-    "frontendVersion": "1.53.6",
-    "VHS_latentpreview": false,
-    "VHS_latentpreviewrate": 0,
-    "VHS_MetadataImage": true,
-    "VHS_KeepIntermediate": true
+    }
   },
   "version": 0.4
 }

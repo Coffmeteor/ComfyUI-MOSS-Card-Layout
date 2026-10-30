@@ -78,7 +78,14 @@ class MOSSFaceLibrary:
     def build(self,face_id:str,description_override:str):
         import numpy as np
         import torch
-        entry=get(face_id);description=description_override.strip() or entry['description']
+        entry=get(face_id)
+        from .face_contract import validate_face
+        profile=entry.get('face_spec')
+        if profile:
+            profile=validate_face(dict(profile,geometry=description_override.strip() or profile['geometry']))
+            description=json.dumps(profile,ensure_ascii=False,separators=(',',':'))
+        else:
+            description=description_override.strip() or entry['description']
         if not description:raise ValueError('Add a face description for text generation')
         with Image.open(image_path(face_id)) as source:
             image=ImageOps.exif_transpose(source).convert('RGB')

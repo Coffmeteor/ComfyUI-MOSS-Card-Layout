@@ -1,12 +1,9 @@
 """Small character controls compiled into the established four-panel contract."""
 from __future__ import annotations
 import json
-import re
-from pathlib import Path
 from . import wardrobe, user_library
-from .layout import build_four_view_layout
-
-TEMPLATE = Path(__file__).parent/'resources/character-card-template.json'
+from .prompt_contract import compile_card, validate_character, validate_outfit
+from .outfit_contract import validate_spec
 
 
 class MOSSOutfitLibrary:
@@ -24,7 +21,12 @@ class MOSSOutfitLibrary:
 
     def build(self, outfit_id: str, extra_outfit_details: str) -> tuple[str,str]:
         e=wardrobe.get_entry(outfit_id)
-        return e['description']+' '+extra_outfit_details,e['portrait_description']
+        if extra_outfit_details.strip():
+            raise ValueError('Edit the shared/front/back/asymmetric outfit fields instead of appending unscoped outfit notes')
+        spec = validate_spec(e.get('outfit_spec') or dict(schema_version=2,
+            shared=e['description'],front=e.get('front_details',''),back=e.get('back_details',''),
+            portrait=e['portrait_description'],asymmetries=e.get('asymmetries',[])))
+        return json.dumps(spec, ensure_ascii=False, separators=(',', ':')), spec['portrait']
 
 
 class MOSSCharacterSettings:
@@ -45,9 +47,7 @@ class MOSSCharacterSettings:
     FUNCTION='build';CATEGORY='MOSS-Image/Character Studio'
 
     def build(self, **values) -> tuple[str]:
-        if type(values['age']) is not int or not 18 <= values['age'] <= 100:
-            raise ValueError('This anatomical character-card template requires an adult age')
-        return (json.dumps(values,ensure_ascii=False),)
+        return (json.dumps(validate_character(values), ensure_ascii=False),)
 
 
 class MOSSCharacterCardComposer:
@@ -67,44 +67,5 @@ class MOSSCharacterCardComposer:
 
     def build(self,long_edge:int,short_edge:int,privacy_blocks:bool,character:str,
               outfit_description:str,portrait_clothing:str,lighting:str,reference_identity:bool) -> tuple[str,int,int]:
-        c=json.loads(character);age=c['age'];person=c['presentation'];shape=c['body_shape']
-        inherited_age=c.get('age_mode','Set age')=='From face selection'
-        inherited_person=person=='From face selection'
-        person='person' if inherited_person else person
-        subject=f'adult {person}' if inherited_age else f'adult {person}, age {age}'
-        if type(age) is not int or not 18<=age<=100: raise ValueError('Adult age required')
-        template=json.loads(TEMPLATE.read_text())
-        captions={k:v for k,v in template.items() if k.endswith('_caption')}
-        for key,value in captions.items():
-            value=value.replace('young adult woman, age 25',subject).replace('young adult woman',f'adult {person}').replace('25-year-old adult woman',subject).replace('slim adult female',f'{shape} adult {person}').replace('{{outfit_portrait}}',portrait_clothing).replace('{{outfit}}',outfit_description)
-            if person!='woman': value=value.replace('She ','They ').replace(' she ',' they ').replace('Her ','Their ').replace(' her ',' their ')
-            value=value.replace('Soft even studio light, natural fabric and skin texture.', 'Natural fabric and skin texture.').replace('Neutral reference photography with soft even studio light.', 'Neutral reference photography.')
-            value=value.replace('The two clothed outfit views retain their stockings and high heels;', "The two clothed outfit views retain only the selected outfit's clothing and footwear;")
-            captions[key]=value
-        if reference_identity:
-            # The image is the only source of facial identity. Reconstructed captions
-            # are deliberately excluded, including any face-description override.
-            appearance=['Match the facial identity of the supplied reference image. Preserve its facial geometry and distinctive features.']
-            if inherited_age: appearance.append('Preserve the apparent adult age of the reference.')
-            if inherited_person: appearance.append('Preserve the gender presentation of the reference.')
-            for key,label in [('hair_style','hairstyle'),('hair_color','hair color'),('expression','expression')]:
-                value=c[key]
-                appearance.append(f'Preserve the {label} of the reference.' if value=='From face selection' else f'Change only the {label} to: {value}.')
-        else:
-            face=c['face_description']
-            if c['expression']!='From face selection':
-                face=' '.join(part for part in re.split(r'(?<=[.!?])\s+',face)
-                              if not re.search(r'smil|grin|laugh|frown|parted|teeth',part,re.I))
-            hair=c['reference_hair'] if c['hair_style']=='From face selection' else c['hair_style']
-            if c['hair_color']!='From face selection':
-                hair=re.sub(r'\b(?:dark|light|jet|black|brown|auburn|blond[e]?|silver|gr[ae]y|white|pink|blue|red|chestnut)\b','',hair,flags=re.I)
-                hair=f"{c['hair_color']} hair. {hair}"
-            appearance=[face,hair]
-            if c['expression']!='From face selection': appearance.append(c['expression']+'.')
-        captions['portrait_caption']=(f"A straight-on studio headshot of an {subject}. "
-            'Head upright and centered, eyes level, shoulders square, looking straight into the lens. '
-            +' '.join(appearance)+' '+c['extra_character_details']+' '
-            'Show the complete head and hair with clear background above, shoulders and upper chest. '
-            'The portrait ends at the upper chest. Upper clothing: '+portrait_clothing+' '+lighting+'.')
-        captions['summary_caption']+=' '+lighting+'. '+c['extra_character_details']
-        return build_four_view_layout(long_edge,short_edge,privacy_blocks,**captions),long_edge,short_edge
+        return compile_card(long_edge, short_edge, privacy_blocks, character,
+                            outfit_description, portrait_clothing, lighting, reference_identity)

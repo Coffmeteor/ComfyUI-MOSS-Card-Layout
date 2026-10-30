@@ -48,6 +48,12 @@ def image_path(kind: str, identifier: str) -> Path:
 
 
 def fields(data: dict, kind: str) -> dict:
+    allowed = {'label','tags','description','portrait_description','hair_description',
+               'front_details','back_details','asymmetries','prompt_contract_version','expression_description','hair_color'}
+    if set(data) - allowed:
+        raise ValueError('Unknown library fields: ' + ', '.join(sorted(set(data) - allowed)))
+    if data.get('prompt_contract_version',2) != 2:
+        raise ValueError('Unsupported library prompt contract version')
     def text(key: str, maximum: int, required: bool = False) -> str:
         value = data.get(key, '')
         if not isinstance(value, str) or len(value) > maximum or (required and not value.strip()):
@@ -62,8 +68,26 @@ def fields(data: dict, kind: str) -> dict:
         raise ValueError('Use up to 24 short tags')
     if kind == 'outfits' and not portrait:
         raise ValueError('Describe upper-body clothing for the portrait separately')
-    return {'label':label, 'description':description, 'portrait_description':portrait,
+    if kind == 'outfits':
+        from .outfit_contract import validate_spec, render_view
+        spec = validate_spec(dict(schema_version=2,shared=description,
+            front=text('front_details',3000), back=text('back_details',3000), portrait=portrait,
+            asymmetries=data.get('asymmetries',[])))
+        front_description, back_description = render_view(spec,'front'), render_view(spec,'back')
+    else:
+        spec = None; front_description = back_description = ''
+        from .face_contract import validate_face
+        face_spec = validate_face(dict(schema_version=2,geometry=description,
+            hair=dict(style=text('hair_description',1000),color=text('hair_color',120)),
+            expression=text('expression_description',1000)))
+    return {'label':label, 'description':description, 'body_description':description if kind == 'outfits' else '',
+            'prompt_contract_version':2, 'portrait_description':portrait, 'outfit_spec':spec,
+            'front_details':text('front_details',3000), 'back_details':text('back_details',3000),
+            'asymmetries':spec['asymmetries'] if kind=='outfits' else [],
+            'front_description':front_description, 'back_description':back_description,
             'category':'My library', 'tags':list(dict.fromkeys(tags)), 'keywords':' '.join(tags),
+            'face_spec':face_spec if kind=='faces' else None,
+            'hair_color':text('hair_color',120), 'expression_description':text('expression_description',1000),
             'hair_description':text('hair_description', 1000), 'source':'user', 'editable':True}
 
 
