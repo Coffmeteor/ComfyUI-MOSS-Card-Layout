@@ -21,13 +21,13 @@ function browse(entries, current, choose) {
     const dialog = element("dialog", "moss-wardrobe-dialog");
     dialog.setAttribute("aria-label", "Choose wardrobe");
     const header = element("header");
-    header.append(element("h2", "", "Wardrobe · 1,407 outfits"));
+    header.append(element("h2", "", "Choose your outfit"));
     const close = element("button", "", "Close");
     close.onclick = () => dialog.close();
     header.append(close);
     const controls = element("div", "moss-wardrobe-controls");
     const search = element("input");
-    search.placeholder = "Search ID, color, garment or material";
+    search.placeholder = "Search dresses, lace, mint, floral…";
     search.setAttribute("aria-label", "Search wardrobe");
     const category = element("select");
     category.setAttribute("aria-label", "Wardrobe category");
@@ -37,6 +37,28 @@ function browse(entries, current, choose) {
         category.append(option);
     }
     controls.append(search, category);
+    const filters = element("div", "moss-wardrobe-filters");
+    const selected = new Set();
+    for (const family of ["Garment", "Color", "Material", "Detail"]) {
+        const row = element("div", "moss-wardrobe-filter-row");
+        row.append(element("strong", "", family));
+        const tags = [...new Set(entries.flatMap(e => e.facets[family]))].sort();
+        for (const tag of tags) {
+            const chip = element("button", "moss-wardrobe-chip", tag);
+            chip.setAttribute("aria-pressed", "false");
+            chip.onclick = () => {
+                selected.has(tag) ? selected.delete(tag) : selected.add(tag);
+                chip.setAttribute("aria-pressed", String(selected.has(tag)));
+                page = 0; render();
+            };
+            row.append(chip);
+        }
+        filters.append(row);
+    }
+    const clear = element("button", "", "Clear filters");
+    clear.onclick = () => { selected.clear(); search.value = ""; category.value = "";
+        filters.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", "false")); page = 0; render(); };
+    controls.append(clear);
     const status = element("p", "moss-wardrobe-status");
     status.setAttribute("role", "status");
     const grid = element("div", "moss-wardrobe-grid");
@@ -48,21 +70,25 @@ function browse(entries, current, choose) {
     function render() {
         const words = search.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
         const filtered = entries.filter(entry => (!category.value || entry.category === category.value)
-            && words.every(word => `${entry.id} ${entry.category} ${entry.keywords} ${entry.description}`.toLowerCase().includes(word)));
+            && [...selected].every(tag => entry.tags.includes(tag))
+            && words.every(word => `${entry.label} ${entry.tags} ${entry.category} ${entry.keywords} ${entry.description}`.toLowerCase().includes(word)));
         const pages = Math.max(1, Math.ceil(filtered.length / 60));
         page = Math.min(page, pages - 1);
         status.textContent = `${filtered.length} outfits · Page ${page + 1} of ${pages} · Click a picture to use it`;
         grid.replaceChildren();
         for (const entry of filtered.slice(page * 60, (page + 1) * 60)) {
             const button = element("button", "moss-wardrobe-outfit");
-            button.setAttribute("aria-label", `Select ${entry.id}`);
+            button.setAttribute("aria-label", `Wear ${entry.label}`);
             button.setAttribute("aria-pressed", String(entry.id === current));
             button.title = entry.description;
             const image = element("img");
             image.loading = "lazy";
             image.src = thumbnail(entry.id);
-            image.alt = `${entry.id} · ${entry.category}`;
-            button.append(image, element("strong", "", entry.id), element("small", "", entry.category));
+            image.alt = entry.label;
+            button.append(image, element("strong", "", entry.label));
+            const chips = element("div", "moss-wardrobe-card-tags");
+            for (const tag of [...entry.facets.Garment.slice(0, 1), ...entry.facets.Color.slice(0, 2), ...entry.facets.Material.slice(0, 1), ...entry.facets.Detail.slice(0, 2)]) chips.append(element("span", "", tag));
+            button.append(chips);
             button.onclick = () => { choose(entry.id); dialog.close(); };
             grid.append(button);
         }
@@ -73,7 +99,7 @@ function browse(entries, current, choose) {
     search.oninput = category.onchange = () => { page = 0; render(); };
     previous.onclick = () => { page--; render(); };
     next.onclick = () => { page++; render(); };
-    dialog.append(header, controls, status, grid, footer);
+    dialog.append(header, controls, filters, status, grid, footer);
     dialog.addEventListener("close", () => dialog.remove(), { once: true });
     document.body.append(dialog);
     render();
@@ -84,6 +110,10 @@ function browse(entries, current, choose) {
 function install(node) {
     const selection = node.widgets.find(widget => widget.name === "outfit_id");
     if (!selection || node.mossWardrobeRefresh) return;
+    selection.type = "converted-widget";
+    selection.hidden = true;
+    selection.draw = () => {};
+    selection.computeSize = () => [0, -4];
     const root = element("div", "moss-wardrobe-preview");
     const imageButton = element("button", "moss-wardrobe-current");
     imageButton.setAttribute("aria-label", "Browse wardrobe from preview");
@@ -103,15 +133,15 @@ function install(node) {
     async function refresh() {
         const ticket = ++sequence;
         const id = String(selection.value || "").trim().toUpperCase();
-        label.textContent = id || "Choose an outfit";
+        label.textContent = "Loading outfit…";
         image.hidden = true;
         try {
             const entries = await catalog();
             if (ticket !== sequence) return;
             const entry = entries.find(e => e.id === id);
-            if (!entry) throw new Error(`Unknown outfit: ${id}`);
-            label.textContent = `${id} · ${entry.category}`;
-            image.alt = `${id} outfit preview`;
+            if (!entry) throw new Error("Select an outfit from the wardrobe");
+            label.textContent = entry.label;
+            image.alt = entry.label;
             image.src = thumbnail(id);
             image.hidden = false;
             description.textContent = entry.description;

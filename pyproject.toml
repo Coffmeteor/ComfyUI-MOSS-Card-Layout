@@ -1,6 +1,6 @@
 [project]
 name = "comfyui-moss-card-layout"
-version = "1.0.0"
+version = "1.0.1"
 description = "Four-panel MOSS character cards with searchable wardrobe previews and automatic asset caching"
 license = {file = "LICENSE"}
 dependencies = ["Pillow>=9.1", "aiohttp>=3.9"]

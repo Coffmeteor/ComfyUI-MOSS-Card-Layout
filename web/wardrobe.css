@@ -20,3 +20,13 @@
 .moss-wardrobe-dialog button:focus-visible,.moss-wardrobe-preview button:focus-visible { outline:3px solid #71d6b6; }
 .moss-wardrobe-dialog button:disabled { opacity:.4; cursor:default; }
 .moss-wardrobe-dialog footer { justify-content:space-between; }
+
+.moss-wardrobe-filters {display:flex; flex-direction:column; gap:5px; max-height:170px; overflow:auto; flex-shrink:0;}
+.moss-wardrobe-filter-row {display:flex; flex-wrap:wrap; gap:5px; align-items:center;}
+.moss-wardrobe-filter-row > strong {width:72px; font-size:12px; color:#b9c6d7;}
+.moss-wardrobe-dialog .moss-wardrobe-chip {padding:3px 8px; border-radius:20px; font-size:12px;}
+.moss-wardrobe-chip[aria-pressed=true] {background:#176e59; border-color:#71d6b6;}
+.moss-wardrobe-card-tags {display:flex; flex-wrap:wrap; gap:4px; justify-content:center;}
+.moss-wardrobe-card-tags span {font-size:10px; background:#212932; padding:2px 6px; border-radius:10px; color:#ccd8e5;}
+.moss-wardrobe-outfit strong {font-size:13px;}
+.moss-wardrobe-outfit img {height:160px;}

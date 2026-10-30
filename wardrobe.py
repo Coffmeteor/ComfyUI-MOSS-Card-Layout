@@ -11,6 +11,7 @@ import urllib.request
 from io import BytesIO
 from pathlib import Path
 from types import ModuleType
+from .labels import describe
 
 
 def library() -> ModuleType:
@@ -30,7 +31,7 @@ def get_entry(identifier: str) -> dict:
 def public_catalog() -> dict:
     # Do not publish filesystem paths through the browser API.
     keys = ("id", "category", "keywords", "description", "portrait_description")
-    return {"entries": [{k: e[k] for k in keys} for e in library().read_catalog()["entries"]]}
+    return {"entries": [({k: e[k] for k in keys} | describe(e)) for e in library().read_catalog()["entries"]]}
 
 
 @lru_cache(maxsize=128)

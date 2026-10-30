@@ -21,8 +21,12 @@ The images remain third-party assets under the source site's terms.
 
 ## Use
 
+The workflow has separate Wardrobe, Character, Result, View Instructions and
+Generation Settings areas. Nodes have consistent spacing and do not overlap.
+
 Open the provided four-view wardrobe workflow. Click Browse Wardrobe, filter by
-category or search, then click an outfit. The selection updates the preview and
+category or combine garment, color, material and detail tags, then click an outfit.
+Cards show human-readable clothing names; technical identifiers are hidden. The selection updates the preview and
 fills the portrait/front/back clothing slots. Save to retain the outfit ID.
 The body-reference panel and privacy switch remain independent. All body panels
 retain the original headless/neckless instructions; MOSS can still render short
