@@ -1,0 +1,22 @@
+.moss-wardrobe-preview { display:flex; flex-direction:column; align-items:stretch; gap:8px; height:100%; box-sizing:border-box; padding:10px; background:#20242b; color:#eee; font:13px/1.4 system-ui; border-radius:8px; }
+.moss-wardrobe-preview button,.moss-wardrobe-dialog button,.moss-wardrobe-dialog input,.moss-wardrobe-dialog select { font:inherit; border:1px solid #637083; border-radius:6px; background:#303944; color:#f4f5f7; padding:8px 10px; cursor:pointer; }
+.moss-wardrobe-current { flex:1; min-height:140px; overflow:hidden; }
+.moss-wardrobe-current img { height:100%; max-height:220px; max-width:100%; object-fit:contain; margin:auto; }
+.moss-wardrobe-preview p { height:52px; overflow:auto; margin:0; font-size:12px; }
+.moss-wardrobe-actions { display:flex; gap:6px; }
+.moss-wardrobe-actions button { flex:1; }
+.moss-wardrobe-dialog { width:min(1120px,94vw); height:min(850px,90vh); box-sizing:border-box; background:#1d222a; color:#f0f3f6; border:1px solid #66758b; border-radius:14px; padding:20px; font:14px/1.4 system-ui; }
+.moss-wardrobe-dialog[open] { display:flex; flex-direction:column; gap:12px; }
+.moss-wardrobe-dialog::backdrop { background:#000b; }
+.moss-wardrobe-dialog header,.moss-wardrobe-controls,.moss-wardrobe-dialog footer { display:flex; gap:12px; align-items:center; }
+.moss-wardrobe-dialog h2 { font-size:20px; margin:0; flex:1; }
+.moss-wardrobe-controls input { flex:1; min-width:140px; }
+.moss-wardrobe-status { margin:0; color:#b9c6d7; }
+.moss-wardrobe-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; overflow:auto; min-height:0; flex:1; align-content:start; }
+.moss-wardrobe-outfit { display:flex; flex-direction:column; gap:5px; align-items:center; }
+.moss-wardrobe-outfit img { width:100%; height:190px; object-fit:contain; background:#eee; border-radius:4px; }
+.moss-wardrobe-outfit[aria-pressed=true] { outline:3px solid #71d6b6; }
+.moss-wardrobe-dialog button:hover,.moss-wardrobe-preview button:hover { border-color:#71d6b6; }
+.moss-wardrobe-dialog button:focus-visible,.moss-wardrobe-preview button:focus-visible { outline:3px solid #71d6b6; }
+.moss-wardrobe-dialog button:disabled { opacity:.4; cursor:default; }
+.moss-wardrobe-dialog footer { justify-content:space-between; }

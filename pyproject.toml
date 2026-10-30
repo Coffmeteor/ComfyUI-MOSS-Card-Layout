@@ -1,0 +1,10 @@
+[project]
+name = "comfyui-moss-card-layout"
+version = "1.0.0"
+description = "Four-panel MOSS character cards with searchable wardrobe previews and automatic asset caching"
+license = {file = "LICENSE"}
+dependencies = ["Pillow>=9.1", "aiohttp>=3.9"]
+[project.urls]
+Repository = "https://github.com/Coffmeteor/ComfyUI-MOSS-Card-Layout"
+[tool.comfy]
+DisplayName = "MOSS Card Layout and Wardrobe"
