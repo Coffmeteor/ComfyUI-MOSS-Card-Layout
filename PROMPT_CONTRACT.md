@@ -2,19 +2,30 @@
 
 `prompt_contract.py` is the single compiler for Character Studio. Components provide typed data; they do not append complete generation prompts. `outfit_contract.py` validates garment facts and renders the two views. `layout.py` owns the four boxes, the official absolute centralized `yxyx` conversion, and body-reference privacy instructions.
 
+With `reference_identity=false`,
+the compiler fills `resources/t2i-card-scaffold.json`, derived from the original
+`wardrobe-four-view-card-request.json`. It retains the frontal portrait pose,
+upper-chest framing, anatomy stance, ghost-mannequin neckline and complete-panel
+containment clauses. Slots own adult subject, body shape, facial attributes,
+lighting, upper clothing and the separate front/back garment descriptions.
+The original outfit-specific stocking/heel assumption is replaced by selected
+clothing and footwear. Reference-conditioned wording has a separate branch.
+The graph uses one full-canvas sampler and one decode; no panel assembly.
+
 ## Ownership
 
 | Input | May change | Must preserve |
 | --- | --- | --- |
-| Reference identity / face selection | Portrait identity and the actual vision/VAE reference | Outfit, panel order and boxes |
-| Age, hairstyle, hair color, expression | Its single portrait instruction | Other appearance controls and all body captions |
-| Body shape | Three body captions | Portrait identity |
+| Text face selection | Portrait facial attributes | Outfit, panel order and boxes |
+| Adult age / presentation | The same subject across all four panels | Outfit and framing |
+| Hairstyle, hair color, expression | Its single portrait instruction | Other appearance controls and all body captions |
+| Body shape / shared body appearance | Three body captions | Portrait identity and edit instruction |
 | Outfit fields | Portrait upper clothing, clothed front and clothed back | Anatomy reference and identity clauses |
 | Privacy switch | Summary privacy clause and anatomy-reference coverage | Portrait, outfit captions and all boxes |
 | Dimensions | Canvas and computed boxes | Captions |
-| Lighting | Shared scene lighting | Identity and clothing data |
+| Lighting | Shared scene and each local body caption | Identity and clothing data |
 
-The portrait contains a complete head, a small crown margin, natural head-to-shoulder proportions, shoulders and upper chest. It does not inherit body-panel feet or neckline rules. The three body panels omit the complete head and neck, retain hands/feet and share shoulder height, body proportions and a ground baseline. The anatomy reference has bare feet; selected clothing and footwear only belong to clothed views.
+The portrait contains a complete head, a small crown margin, natural head-to-shoulder proportions, shoulders and upper chest. It does not inherit body-panel feet or neckline rules. The three body panels omit the complete head and neck, retain hands/feet and share camera scale, body proportions and a ground baseline; footwear may alter standing height. The anatomy reference has bare feet; selected clothing and footwear only belong to clothed views.
 
 ## Outfit data
 
@@ -44,7 +55,28 @@ The former first-sentence portrait extractor is retired. New bulk imports requir
 
 ## Face data
 
-`face_contract.py` owns independent facial geometry, hairstyle, hair color and expression. The face node carries this structured record through the existing string output; users edit separate form fields and never need to write JSON. Text generation replaces only the selected field when a control is overridden. It does not remove whole sentences from facial descriptions or strip colors with a runtime heuristic. Reference editing uses the actual image for identity; reconstructed face prose is excluded. Inherited expression and an explicit expression override are mutually exclusive.
+`face_contract.py` owns independent facial geometry, hairstyle, hair color and expression. The face node carries this structured record through the existing string output; users edit separate form fields and never need to write JSON. Text generation replaces only the selected field when a control is overridden. Reference editing uses the actual image for identity; reconstructed facial geometry prose is excluded. With `reference_identity=true`, nonempty face descriptions are parsed to inherit separate hairstyle, hair color and expression values. Empty descriptions support raw LoadImage references and use generic preservation instructions; text-only generation requires a face description. Explicit overrides replace their own inherited instruction.
+
+The reference portrait requests an upright head, horizontal eye line, level shoulders
+and lowered hands. A word-boundary headwear detector inspects portrait clothing:
+ordinary outfits request a bare head and natural hair crown, while explicit hats,
+cloches, veils and other indexed headwear retain their requested accessory. The
+summary and all three body captions retain headless/neckless wording recognized
+by `text_scope.py`; privacy wording stays in the summary and anatomy caption.
+
+The public source provides hairstyle metadata, not its author generation prompts
+or numeric age/ethnicity annotations. Face descriptions are visually authored
+attributes, not recovered original prompts. Revision2 reviews all60 full-size
+sources for cheek/jaw proportions, eyelids, iris hue when visible, nose shape,
+lips, skin detail, hair length/layers and expression. Uncertain hues stay
+unspecified. Original IDs, URLs, source descriptions and categories remain as
+provenance.
+
+For T2I, **Age prompt** offers `Set age` and `Unspecified adult age`. The latter
+does not infer a number from the selected picture, and disables the numeric
+control. Old `From face selection` values remain accepted as an equivalent
+backend alias and migrate to the clearer label in the UI. Reference-only
+settings retain their existing inheritance behavior.
 
 ```json
 {"schema_version":2,"geometry":"Oval face, almond eyes, a straight nose and full lower lip.","hair":{"style":"Center-parted straight bob","color":"Dark brown"},"expression":"Parted-lip smile showing upper teeth."}
@@ -54,10 +86,21 @@ All 24,000 face/outfit/privacy/conditioning combinations have been compiled and 
 
 ## Inspect the executed prompt
 
-The reference evaluation workflow connects:
+The active text workflow connects:
 
-`Face / Character / Outfit -> Card Settings -> Preview as Text -> Text Encode MOSS-Image Edit`.
+`Face / Character / Outfit -> Card Settings -> Preview as Text -> CLIPTextEncode`.
 
-The built-in `PreviewAny` node passes its input string unchanged. Its preview is therefore the JSON consumed by the positive encoder, not a separately reconstructed explanation. Native edit encoding adds the `Picture 1` vision marker and Qwen chat template; it does not rewrite the JSON captions. Both conditioning branches receive the same reference image.
+The built-in `PreviewAny` node passes its input string unchanged. Its preview is therefore the JSON consumed by the positive encoder, not a separately reconstructed explanation. Face thumbnails are selection previews; image outputs do not connect to text generation.
 
 Runtime audits record component settings, the structured outfit, upper clothing and final JSON from ComfyUI history. Property tests check field ownership, schema rejection, side transforms, view visibility, box bounds and library round trips. Native output review is separate: a correct prompt does not certify that every generated pixel obeys it. Model comparisons follow prompt audit, using matched references, seeds and sampling settings.
+
+## Released single-pass reference route
+
+The selected reference release uses one joint canvas, one sampler and one decode.
+Regional/shared-body assembly remains a retired experiment. The active
+route uses `MOSSAnchoredReferenceEncode`, bbox-aligned reference positions and
+per-panel direct text/reference visibility. Image self-attention and native text
+self-attention stay open. `skin_tone` resolves one shared phrase into the summary,
+portrait and all three body captions. Personal reference uploads without a skin
+phrase use the documented light warm-ivory fallback; no image-based skin classifier
+is applied. See REFERENCE_SETUP.md and the saved Character Studio - Reference graphs.

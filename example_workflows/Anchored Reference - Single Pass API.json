@@ -1,0 +1,184 @@
+{
+  "8": {
+    "inputs": {
+      "image": "reference.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "image_moss_image_edit",
+      "images": [
+        "38",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "28": {
+    "inputs": {
+      "width": 1536,
+      "height": 864,
+      "batch_size": 1
+    },
+    "class_type": "EmptyFlux2LatentImage",
+    "_meta": {
+      "title": "Empty Flux 2 Latent"
+    }
+  },
+  "31": {
+    "inputs": {
+      "lora_name": "moss/MOSS-Character-Studio-Reference-BF16.safetensors",
+      "strength_model": 1.0,
+      "model": [
+        "30",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "32": {
+    "inputs": {
+      "double_layers": "",
+      "single_layers": "22",
+      "start_percent": 0,
+      "end_percent": 1,
+      "model": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "SkipLayerGuidanceDiTSimple",
+    "_meta": {
+      "title": "SkipLayerGuidanceDiTSimple"
+    }
+  },
+  "36": {
+    "class_type": "MOSSAnchoredReferenceEncode",
+    "inputs": {
+      "clip": [
+        "30",
+        1
+      ],
+      "vae": [
+        "30",
+        2
+      ],
+      "reference_image": [
+        "8",
+        0
+      ],
+      "prompt": "",
+      "layout_json": "{\"summary\":{\"meta\":[\"photorealistic character and wardrobe reference board\"],\"canvas\":\"multi_panel\",\"caption\":\"Exactly four separate photographs in one horizontal row on matching neutral studio backgrounds: identity portrait, front body-proportion reference, clothed front view, clothed back view. Place every view inside its specified bounding box. The three body views have no head, face, chin or hair; keep their complete shoulders, arms, hands, legs and feet in frame. Natural skin and fabric, soft even studio lighting. No text, labels or extra people. Only the body-proportion reference has two opaque charcoal privacy rectangles.\"},\"items\":[{\"label\":\"character\",\"caption\":\"One close photographic identity portrait of the SAME adult person in reference image 1. Preserve the reference facial geometry, distinctive features, apparent adult age, expression, hair color and hairstyle. Show the complete head with a small margin above the hair, natural head-to-shoulder proportions, shoulders and upper chest only; no waist or lower garments. Upper clothing: A plain white cotton button-down shirt with an open collar.\",\"bbox\":[-411,-743,413,-303]},{\"label\":\"character\",\"caption\":\"One headless straight-on FRONT adult body-proportion reference. A slim adult female build with a defined waist and straight legs. Relaxed arms, complete visible hands and bare feet, unobstructed shoulders and legs, no clothing or footwear. Two flat solid opaque charcoal rectangular graphic overlays cover the entire breast and pubic regions. The overlays are not clothing and do not reshape the body. The head and entire neck are invisible; the body begins at complete shoulders or the hollow garment neckline, with plain studio background above. Keep all feet fully inside the frame.\",\"bbox\":[-411,-286,413,48]},{\"label\":\"character\",\"caption\":\"One headless complete FRONT outfit and body view, upright with arms relaxed, both hands and the entire footwear inside the region. A slim adult female build with a defined waist and straight legs. A plain white cotton button-down shirt tucked into straight navy trousers, a brown belt and black flat loafers. No bag. The head and entire neck are invisible; the body begins at complete shoulders or the hollow garment neckline, with plain studio background above. Keep all feet fully inside the frame.\",\"bbox\":[-411,65,413,401]},{\"label\":\"character\",\"caption\":\"One headless complete BACK outfit and body view, upright with arms relaxed, both hands and entire footwear inside the region. A slim adult female build with a defined waist and straight legs. A plain white cotton button-down shirt tucked into straight navy trousers, a brown belt and black flat loafers. No bag. The head and entire neck are invisible; the body begins at complete shoulders or the hollow garment neckline, with plain studio background above. Keep all feet fully inside the frame.\",\"bbox\":[-411,417,413,746]}],\"bbox_coord_space\":\"abs_centralized\",\"bbox_format\":\"yxyx\"}",
+      "canvas_width": 1536,
+      "canvas_height": 864,
+      "ref_allow_text": true,
+      "mask_vision_tokens": false,
+      "anchor_mode": "full_portrait_panel",
+      "panel_scoped_text": true,
+      "reference_framing": "auto_portrait",
+      "mask_text_self_attention": false,
+      "mask_text_embedder": false
+    }
+  },
+  "37": {
+    "inputs": {
+      "seed": 42,
+      "steps": 25,
+      "cfg": 3.0,
+      "sampler_name": "euler",
+      "scheduler": "sgm_uniform",
+      "denoise": 1,
+      "model": [
+        "32",
+        0
+      ],
+      "positive": [
+        "39",
+        0
+      ],
+      "negative": [
+        "36",
+        0
+      ],
+      "latent_image": [
+        "28",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "38": {
+    "inputs": {
+      "samples": [
+        "37",
+        0
+      ],
+      "vae": [
+        "30",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "39": {
+    "class_type": "MOSSAnchoredReferenceEncode",
+    "inputs": {
+      "clip": [
+        "30",
+        1
+      ],
+      "vae": [
+        "30",
+        2
+      ],
+      "reference_image": [
+        "8",
+        0
+      ],
+      "prompt": "{\"summary\":{\"meta\":[\"photorealistic character and wardrobe reference board\"],\"canvas\":\"multi_panel\",\"caption\":\"Exactly four separate photographs in one horizontal row on matching neutral studio backgrounds: identity portrait, front body-proportion reference, clothed front view, clothed back view. Place every view inside its specified bounding box. The three body views have no head, face, chin or hair; keep their complete shoulders, arms, hands, legs and feet in frame. Natural skin and fabric, soft even studio lighting. No text, labels or extra people. Only the body-proportion reference has two opaque charcoal privacy rectangles.\"},\"items\":[{\"label\":\"character\",\"caption\":\"One close photographic identity portrait of the SAME adult person in reference image 1. Preserve the reference facial geometry, distinctive features, apparent adult age, expression, hair color and hairstyle. Show the complete head with a small margin above the hair, natural head-to-shoulder proportions, shoulders and upper chest only; no waist or lower garments. Upper clothing: A plain white cotton button-down shirt with an open collar.\",\"bbox\":[-411,-743,413,-303]},{\"label\":\"character\",\"caption\":\"One headless straight-on FRONT adult body-proportion reference. A slim adult female build with a defined waist and straight legs. Relaxed arms, complete visible hands and bare feet, unobstructed shoulders and legs, no clothing or footwear. Two flat solid opaque charcoal rectangular graphic overlays cover the entire breast and pubic regions. The overlays are not clothing and do not reshape the body. The head and entire neck are invisible; the body begins at complete shoulders or the hollow garment neckline, with plain studio background above. Keep all feet fully inside the frame.\",\"bbox\":[-411,-286,413,48]},{\"label\":\"character\",\"caption\":\"One headless complete FRONT outfit and body view, upright with arms relaxed, both hands and the entire footwear inside the region. A slim adult female build with a defined waist and straight legs. A plain white cotton button-down shirt tucked into straight navy trousers, a brown belt and black flat loafers. No bag. The head and entire neck are invisible; the body begins at complete shoulders or the hollow garment neckline, with plain studio background above. Keep all feet fully inside the frame.\",\"bbox\":[-411,65,413,401]},{\"label\":\"character\",\"caption\":\"One headless complete BACK outfit and body view, upright with arms relaxed, both hands and entire footwear inside the region. A slim adult female build with a defined waist and straight legs. A plain white cotton button-down shirt tucked into straight navy trousers, a brown belt and black flat loafers. No bag. The head and entire neck are invisible; the body begins at complete shoulders or the hollow garment neckline, with plain studio background above. Keep all feet fully inside the frame.\",\"bbox\":[-411,417,413,746]}],\"bbox_coord_space\":\"abs_centralized\",\"bbox_format\":\"yxyx\"}",
+      "layout_json": "{\"summary\":{\"meta\":[\"photorealistic character and wardrobe reference board\"],\"canvas\":\"multi_panel\",\"caption\":\"Exactly four separate photographs in one horizontal row on matching neutral studio backgrounds: identity portrait, front body-proportion reference, clothed front view, clothed back view. Place every view inside its specified bounding box. The three body views have no head, face, chin or hair; keep their complete shoulders, arms, hands, legs and feet in frame. Natural skin and fabric, soft even studio lighting. No text, labels or extra people. Only the body-proportion reference has two opaque charcoal privacy rectangles.\"},\"items\":[{\"label\":\"character\",\"caption\":\"One close photographic identity portrait of the SAME adult person in reference image 1. Preserve the reference facial geometry, distinctive features, apparent adult age, expression, hair color and hairstyle. Show the complete head with a small margin above the hair, natural head-to-shoulder proportions, shoulders and upper chest only; no waist or lower garments. Upper clothing: A plain white cotton button-down shirt with an open collar.\",\"bbox\":[-411,-743,413,-303]},{\"label\":\"character\",\"caption\":\"One headless straight-on FRONT adult body-proportion reference. A slim adult female build with a defined waist and straight legs. Relaxed arms, complete visible hands and bare feet, unobstructed shoulders and legs, no clothing or footwear. Two flat solid opaque charcoal rectangular graphic overlays cover the entire breast and pubic regions. The overlays are not clothing and do not reshape the body. The head and entire neck are invisible; the body begins at complete shoulders or the hollow garment neckline, with plain studio background above. Keep all feet fully inside the frame.\",\"bbox\":[-411,-286,413,48]},{\"label\":\"character\",\"caption\":\"One headless complete FRONT outfit and body view, upright with arms relaxed, both hands and the entire footwear inside the region. A slim adult female build with a defined waist and straight legs. A plain white cotton button-down shirt tucked into straight navy trousers, a brown belt and black flat loafers. No bag. The head and entire neck are invisible; the body begins at complete shoulders or the hollow garment neckline, with plain studio background above. Keep all feet fully inside the frame.\",\"bbox\":[-411,65,413,401]},{\"label\":\"character\",\"caption\":\"One headless complete BACK outfit and body view, upright with arms relaxed, both hands and entire footwear inside the region. A slim adult female build with a defined waist and straight legs. A plain white cotton button-down shirt tucked into straight navy trousers, a brown belt and black flat loafers. No bag. The head and entire neck are invisible; the body begins at complete shoulders or the hollow garment neckline, with plain studio background above. Keep all feet fully inside the frame.\",\"bbox\":[-411,417,413,746]}],\"bbox_coord_space\":\"abs_centralized\",\"bbox_format\":\"yxyx\"}",
+      "canvas_width": 1536,
+      "canvas_height": 864,
+      "ref_allow_text": true,
+      "mask_vision_tokens": false,
+      "anchor_mode": "full_portrait_panel",
+      "panel_scoped_text": true,
+      "reference_framing": "auto_portrait",
+      "mask_text_self_attention": false,
+      "mask_text_embedder": false
+    }
+  },
+  "30": {
+    "class_type": "MOSSStudioHFLoader",
+    "inputs": {
+      "model_path": "MOSS-Image-SFT"
+    }
+  },
+  "33": {
+    "class_type": "ModelSamplingAuraFlow",
+    "inputs": {
+      "model": [
+        "31",
+        0
+      ],
+      "shift": 5.0,
+      "sampling": "flow"
+    }
+  }
+}

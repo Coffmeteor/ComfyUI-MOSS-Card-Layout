@@ -1,2 +1,4 @@
 Pillow>=9.1
 aiohttp>=3.9
+mediapipe>=0.10.20
+opencv-python>=4.10

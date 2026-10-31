@@ -1,4 +1,5 @@
 """Resolve clothing-only wardrobe entries into existing character-card captions."""
+
 from __future__ import annotations
 
 import hashlib
@@ -23,7 +24,9 @@ def read_catalog() -> dict[str, Any]:
     return _read_catalog(str(CATALOG), stat.st_mtime_ns, stat.st_size)
 
 
-def resolve(request: dict[str, Any], entry: dict | None = None) -> tuple[dict[str, Any], dict[str, Any] | None]:
+def resolve(
+    request: dict[str, Any], entry: dict | None = None
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
     """Replace explicit wardrobe slots; preserve character and layout instructions."""
     request = dict(request)
     identifier = request.pop("outfit_id", "")
@@ -32,27 +35,50 @@ def resolve(request: dict[str, Any], entry: dict | None = None) -> tuple[dict[st
     identifier = identifier.strip().upper()
     keys = ("summary_caption", "portrait_caption", "front_caption", "back_caption")
     if not identifier:
-        if any(OUTFIT in str(request.get(k, "")) or PORTRAIT in str(request.get(k, "")) for k in keys):
+        if any(
+            OUTFIT in str(request.get(k, "")) or PORTRAIT in str(request.get(k, ""))
+            for k in keys
+        ):
             raise ValueError("Wardrobe caption slots require outfit_id")
         return request, None
     catalog = read_catalog()
-    entry = entry if entry is not None and entry["id"] == identifier else next((x for x in catalog["entries"] if x["id"] == identifier), None)
+    entry = (
+        entry
+        if entry is not None and entry["id"] == identifier
+        else next((x for x in catalog["entries"] if x["id"] == identifier), None)
+    )
     if entry is None:
-        raise ValueError(f"Unknown outfit_id: {identifier}; select an ID from the costume gallery")
-    for key, token in (("portrait_caption", PORTRAIT), ("front_caption", OUTFIT), ("back_caption", OUTFIT)):
+        raise ValueError(
+            f"Unknown outfit_id: {identifier}; select an ID from the costume gallery"
+        )
+    for key, token in (
+        ("portrait_caption", PORTRAIT),
+        ("front_caption", OUTFIT),
+        ("back_caption", OUTFIT),
+    ):
         if token not in str(request.get(key, "")):
-            raise ValueError(f"{key} requires the {token} wardrobe slot; use wardrobe-card-request.json")
+            raise ValueError(
+                f"{key} requires the {token} wardrobe slot; use wardrobe-card-request.json"
+            )
     for key in keys:
         text = request.get(key)
         if isinstance(text, str):
             view = "back_description" if key == "back_caption" else "front_description"
-            request[key] = text.replace(OUTFIT, entry.get(view, entry.get("body_description", entry["description"]))).replace(PORTRAIT, entry["portrait_description"])
-    provenance = {"id": identifier, "category": entry["category"], "catalog": str(CATALOG),
-                  "catalog_sha256": hashlib.sha256(CATALOG.read_bytes()).hexdigest(),
-                  "source_image": entry.get("image_url", "user-library:" + identifier), "source_image_sha256": entry["source_image_sha256"],
-                  "description": entry["description"], "portrait_description": entry["portrait_description"],
-                  "front_description": entry.get("front_description", entry["description"]),
-                  "back_description": entry.get("back_description", entry["description"]),
-                  "outfit_spec": entry.get("outfit_spec")}
+            request[key] = text.replace(
+                OUTFIT,
+                entry.get(view, entry.get("body_description", entry["description"])),
+            ).replace(PORTRAIT, entry["portrait_description"])
+    provenance = {
+        "id": identifier,
+        "category": entry["category"],
+        "catalog": str(CATALOG),
+        "catalog_sha256": hashlib.sha256(CATALOG.read_bytes()).hexdigest(),
+        "source_image": entry.get("image_url", "user-library:" + identifier),
+        "source_image_sha256": entry["source_image_sha256"],
+        "description": entry["description"],
+        "portrait_description": entry["portrait_description"],
+        "front_description": entry.get("front_description", entry["description"]),
+        "back_description": entry.get("back_description", entry["description"]),
+        "outfit_spec": entry.get("outfit_spec"),
+    }
     return request, provenance
-

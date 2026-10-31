@@ -1,133 +1,85 @@
 # MOSS Character Studio
 
-ComfyUI nodes for three/four-panel character cards, including a searchable
-visually curated 100-outfit wardrobe and 60-face library with live thumbnail previews,
-editable character controls and a persistent personal library.
+Build a complete four-panel character card from a selected face and outfit:
+portrait, adult anatomy reference, clothed front and clothed back. The reference
+workflow uses one full-canvas sampler and one VAE decode, with JSON/bbox layout,
+portrait-scoped reference conditioning, automatic framing and shared skin controls.
+
+**Release:** nodes 1.4.0 · reference LoRA 1.0.0 · ComfyUI 0.43.0 plus the bundled
+reference-support patch. The existing 16-step text workflow remains available.
+
+- [LoRA, workflows, examples and walkthrough](https://huggingface.co/Coffmeteor/MOSS-Character-Studio)
+- [Reference installation](REFERENCE_SETUP.md)
+- [Prompt field ownership](PROMPT_CONTRACT.md)
 
 ## Install
 
-In ComfyUI Manager, use Install via Git URL:
+Search **MOSS Card Layout and Wardrobe** in ComfyUI Manager. The legacy Manager
+catalog contains this Git repository. Registry version approval is separate;
+if a version is unavailable there, use **Install via Git URL**:
+
+```text
 https://github.com/Coffmeteor/ComfyUI-MOSS-Card-Layout
+```
 
-Restart ComfyUI and refresh the browser. Existing users update this node pack
-to version 1.2.0 to get structured prompt fields and the aligned workflows. Registry/Manager search listing is pending;
-Git URL installation works independently of registry approval.
+Install the package requirements with ComfyUI's Python, restart and refresh.
+For reference generation, complete the one-time [reference setup](REFERENCE_SETUP.md).
+The setup verifies the exact supported core version and backs up both modified
+files. It is never run automatically when the package is imported.
 
-The prompt catalog ships with the node. Gallery images download automatically
-from https://ai-costume-gallery.pages.dev/ when their previews are requested,
-then remain in `ComfyUI/user/moss-card-layout/images`. Downloads are bounded,
-SHA-256 verified and atomically cached. No Hermes installation or private paths
-are required. First use needs internet; previously downloaded previews work offline.
-The images remain third-party assets under the source site's terms.
+## Make and revise a card
 
-## Use
+1. Open **example_workflows/Character Studio - Reference.json**.
+2. Click **Choose face**. Search features/hair tags and select a thumbnail.
+3. Click **Choose outfit**. Search garment, color or material and select an outfit.
+4. Set character controls and **Privacy coverage**. Off requests an unobstructed
+   adult anatomy panel; On requests two opaque rectangles. The whole card is
+   regenerated when this changes.
+5. Run. **Preview as Text** shows the exact JSON used by the model; **Save Image**
+   shows the complete result. Change a component and run again to revise it.
 
-Open **Character Studio - Text.json** from `example_workflows`. The top row
-contains aligned Face, Character/Card and Outfit sections. The actual final JSON, Result and a separate Advanced generation section sit below.
+The selected recipe is 1536×864, 25 steps, CFG 3, Euler/sgm_uniform, AuraFlow
+shift 5, SLG layer 22 and reference LoRA strength 1.0. No trigger word is used.
+The LoRA loader includes a Hugging Face model-download link in workflow metadata.
 
-1. Click **Choose face**, search features or combine hair/face-shape tags, then
-   click a thumbnail. This text route uses derived descriptions to generate a
-   new face with similar traits; it does not preserve a reference person's identity.
-2. Click **Choose outfit**, combine garment/color/material tags and select a
-   thumbnail. Clothing fills the portrait and both clothed body views.
-3. Set age, body shape, hairstyle, hair color and expression in **Character
-   Settings**. `From face selection` keeps the selected description for that
-   property. Explicit color/expression changes remove competing source details.
-4. Choose dimensions, lighting and the privacy switch in **Four-Panel Card
-   Settings**, then run. Change a component and run again to regenerate the card.
+**Character Studio - Text.json** uses the original independent 16-step accelerator
+and descriptors instead of reference-image identity conditioning. It has its own
+settings; do not substitute that accelerator into the reference workflow.
 
-The component prompt contract is version 2. See [field ownership and validation](PROMPT_CONTRACT.md).
-New items with conflicting spatial fields fail before generation. The previous
-first-sentence clothing extractor is retired.
+## Add your own assets
 
-The requested panels are portrait, independent anatomy reference, clothed front and
-clothed back. Output acceptance remains unresolved: body panels can retain full heads
-or neck sections, anatomy panels can inherit shoes, and generated privacy shapes
-can differ from the requested rectangles. Review the native output; the component
-schema validates prompts, not these pixel-level requirements.
-The older **Four View Visual Wardrobe** workflow remains supported.
+**Add my own** accepts PNG/JPEG/WebP images with a name, tags and editable fields.
+Face geometry, hairstyle/color and expression have separate fields. Outfits use
+shared garment identity, front/back details, portrait clothing and wearer-side
+accessory descriptions. Uploaded descriptions are entered manually.
 
-### Add your own faces or outfits
+**My library**, **Edit**, **Remove** and **Undo remove** manage personal items.
+They live in `ComfyUI/user/moss-card-layout/library` and survive package updates.
+A workflow JSON does not include personal images; share those separately when needed.
 
-Click **Add my own**, choose a PNG/JPEG/WebP (up to 16 MB and 32 megapixels),
-then enter a name, tags and short description. For faces, describe facial details,
-hairstyle, hair color and expression separately. For outfits, enter shared garment identity, front-only details,
-known back-only details and portrait clothing. Add asymmetric features with a
-wearer-side selector and front/back visibility; no JSON editing is required. Descriptions are entered manually; this node pack does not run a
-captioning model for uploaded images. The saved item is selected automatically.
-Use **My library** to find it later. **Edit**, **Remove** and **Undo remove** are
-available on your own items. IDs are internal and never needed for normal use.
+## Downloads and dependencies
 
-User data lives in `ComfyUI/user/moss-card-layout/library`, outside the node
-package, and survives updates. Back up that directory with your workflows.
-Removal moves items into that library's `.trash`; the browser offers immediate
-undo. Workflows reference local library items: sharing a workflow JSON alone
-does not transfer personal images. Uploads stay on the ComfyUI server.
+The curated library contains 60 faces and 100 outfits. Catalog descriptions ship
+with the package. Image previews download from the original
+[portrait gallery](https://ai-portrait-gallery.pages.dev/) and
+[costume gallery](https://ai-costume-gallery.pages.dev/), with bounded downloads,
+checksum verification and persistent caching under `ComfyUI/user/moss-card-layout`.
+Source images are not redistributed or relicensed by this repository.
 
-### Models and reference editing
+Automatic reference framing downloads Google's pinned 3.76 MB MediaPipe landmark
+model on first use into `ComfyUI/models/mediapipe`. It verifies the exact size and
+SHA-256 before installation. Existing verified models are reused; an optional
+`MOSS_FACE_LANDMARKER_MODEL` environment variable supports a shared local copy.
 
-This package supplies selection, library and layout nodes. Text generation
-requires the existing MOSS HF integration, original SFT model and sixteen-step
-accelerator. Replace the example HF-directory placeholder `MOSS-Image-SFT` with your installed absolute HF directory and choose the installed accelerator in the generation section. It does not
-install model weights or replace their licenses.
+## Observed behavior
 
-The released workflow uses text conditioning. Experimental armV5 reference-card workflows are separate: local clothing edits can retain a reference face, while rebuilding a four-panel card can change facial features or body framing. Reference-card quality is being evaluated independently of this library package.
+The release examples retain the four roles and apply selected outfits in one
+sampling pass. Short neck remnants, facial/expression variation, accessory changes
+and differences in skin illumination remain visible in some outputs. Automatic
+framing can level a tilted face, suppress headwear and locally adjust unequal eye
+geometry; it can also alter outer hair. Direct reference access is scoped to the
+portrait, while target image-to-image and text self-attention remain shared.
 
-### Face source
-
-Face metadata comes from https://ai-portrait-gallery.pages.dev/. Images are
-fetched from the source on demand and cached under
-`ComfyUI/user/moss-card-layout/portraits`; they are not redistributed in this
-repository. Thumbnail hashes and full-image byte counts are checked. The 60 selected faces and 100 selected outfits were visually reviewed and manually rewritten into independent fields. Original reconstructed captions remain in source-provenance fields; these are not the source creator's original generation prompts. Source gallery terms apply.
-
-## Publishing
-
-Publisher: `coffmeteor`. Registry publication uses the official Comfy-Org action.
-Create a publishing API key for this publisher in Comfy Registry, then store it
-as the GitHub repository Actions secret `REGISTRY_ACCESS_TOKEN`. Never commit it.
-Run **Actions > Publish to Comfy Registry > Run workflow** for the first publish.
-Later changes to `pyproject.toml` on main also trigger publication. Bump the
-semantic version for each new Registry release. Without the secret, the workflow
-reports that publication was skipped; a green setup run is not a published version.
-
-See https://docs.comfy.org/registry/publishing for the official instructions.
-
-
-## Regional editing (1.3.0)
-
-Requires native MOSS support in ComfyUI 0.43.0 or newer. The new nodes reuse an
-installed original MOSS HF snapshot and armV5; they do not download or duplicate
-model weights. `MOSS HF Snapshot - Native` resolves a snapshot name under
-`ComfyUI/models/diffusers/` and exposes the native model, encoder and VAE.
-
-`Card Edit Region - JSON and Mask` creates a real sampling mask from the same
-validated card region/bbox used by the JSON. **Protect box** edits around the box;
-turn it off to edit inside it. `Card Region - Local Sampling` crops the latent,
-mask and reference to exactly matching coordinates and dimensions.
-`Card Region - Restore Canvas Latent` restores protected and outside latent values
-before one complete-canvas VAE decode. No foreground segmentation or final-image
-face replacement is performed.
-
-The face library now includes individually reviewed face rectangles for 60
-portraits. `Portrait Reference Placement` transforms each rectangle through the
-same uniform center-crop/placement used for the whole reference photograph.
-Connect its suggested box to native `Create Bounding Boxes` to inspect/adjust it.
-The native interactive editor requires the **Nodes 2.0** canvas setting.
-Personal uploads without reviewed metadata require a manually drawn protection
-box; the node refuses to guess one. `Reference Character - Preserve Face and
-Expression` inherits appearance and expression and exposes only body shape.
-
-Keep the full-card generation JSON separate from the short local edit instruction.
-The **Selected outfit** mode derives only the selected view's garment description;
-it never copies the face geometry description into an editing instruction. Both
-positive and negative MOSS reference encoders must receive the exact local crop,
-without independently resizing it to a different megapixel target.
-
-Protected-face editing retained the original facial features and expressions in
-three reviewed reference cases, including an identity outside the continuation
-training set, and in the integrated four-panel workflow. This preserves a face
-at its existing placement; it does not validate freely changing its pose or
-expression. Crown outpainting remains unreliable for cropped references. Native
-outputs can retain pale portrait-edge halos, neck remnants, and outfit/privacy
-rendering errors. The experimental continuation remains separate from the text
-workflow and is not bundled as a published model.
+The node pack is MIT licensed. The bundled ComfyUI reference patch is GPL-3.0;
+see `licenses/ComfyUI-GPL-3.0.txt`. Model weights have their separate Apache-2.0
+license and attribution on Hugging Face. Gallery assets retain their source terms.

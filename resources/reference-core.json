@@ -1,0 +1,88 @@
+{
+  "base": "ComfyUI v0.43.0",
+  "base_commit": "426f5eea52a7ece1dd599fff4cb6cd1f352ddd24",
+  "validated_commit": "1ac65d39d8fb2b61eb0eb5b3be88660cb05abb75",
+  "license": "GPL-3.0",
+  "files": [
+    {
+      "path": "comfy/ldm/moss_image/model.py",
+      "base_sha256": "3996d11d7a271c35b87eea19906c3dc6819ed2a891d875485a78a8255652abb9",
+      "patched_sha256": "3d9a949cd9017268e77a6d92f239fa6e9ad60528ba1d03ccf648bc51808a7ec3",
+      "edits": [
+        {
+          "start": 12,
+          "stop": 12,
+          "before": "",
+          "after": "\n\ndef reference_attention_mask(image_tokens, text_len, ref_tokens, device, dtype, ref_query_mask, ref_allow_text=True, context_vision_mask=None, query_ref_tokens=0, image_to_text_mask=None, text_attention_mask=None, text_to_ref_mask=None, mask_text_self_attention=False, dit_text_mask=None):\n    \"\"\"Restrict reference keys without isolating target regions from each other.\"\"\"\n    if ref_query_mask is None:\n        ref_query_mask = torch.ones((1, image_tokens), dtype=torch.bool, device=device)\n    allowed = ref_query_mask.to(device=device).reshape(-1, image_tokens)\n    bias = torch.zeros(allowed.shape, device=device, dtype=dtype).masked_fill(~allowed, -torch.inf) if allowed.dtype == torch.bool else allowed.to(dtype=dtype)\n    nq = image_tokens + text_len + query_ref_tokens\n    mask = torch.zeros((bias.shape[0], 1, nq, image_tokens + text_len + ref_tokens), device=device, dtype=dtype)\n    mask[:, 0, :image_tokens, image_tokens + text_len:] = bias.unsqueeze(-1)\n    if not ref_allow_text:\n        mask[:, :, image_tokens:image_tokens + text_len, image_tokens + text_len:] = -torch.inf\n    elif text_to_ref_mask is not None:\n        scope = text_to_ref_mask.to(device=device)\n        if scope.ndim != 2 or scope.shape[-1] != text_len:\n            raise ValueError(\"Text-to-reference mask does not match context\")\n        scope = torch.zeros_like(scope, dtype=dtype).masked_fill(~scope, -torch.inf) if scope.dtype == torch.bool else scope.to(dtype=dtype)\n        mask[:, 0, image_tokens:image_tokens + text_len, image_tokens + text_len:] = scope.unsqueeze(-1)\n    if context_vision_mask is not None:\n        blocked = torch.isneginf(bias).unsqueeze(-1) & context_vision_mask.to(device=device, dtype=torch.bool).reshape(-1, 1, text_len)\n        mask[:, 0, :image_tokens, image_tokens:image_tokens + text_len].masked_fill_(blocked, -torch.inf)\n    if image_to_text_mask is not None:\n        scope = image_to_text_mask.to(device=device)\n        if scope.shape[-2:] != (image_tokens, text_len):\n            raise ValueError(\"Image-to-text mask does not match canvas/context\")\n        scope = torch.zeros_like(scope, dtype=dtype).masked_fill(~scope, -torch.inf) if scope.dtype == torch.bool else scope.to(dtype=dtype)\n        mask[:, 0, :image_tokens, image_tokens:image_tokens + text_len] += scope\n    dit_scope = dit_text_mask if dit_text_mask is not None else (text_attention_mask if mask_text_self_attention else None)\n    if dit_scope is not None:\n        scope = dit_scope.to(device=device)\n        if scope.shape[-2:] != (text_len, text_len):\n            raise ValueError(\"Text attention mask does not match context\")\n        scope = torch.zeros_like(scope, dtype=dtype).masked_fill(~scope, -torch.inf) if scope.dtype == torch.bool else scope.to(dtype=dtype)\n        mask[:, 0, image_tokens:image_tokens + text_len, image_tokens:image_tokens + text_len] += scope\n    return mask\n"
+        },
+        {
+          "start": 173,
+          "stop": 174,
+          "before": "    def rope(self, h, w, text_len, device, transformer_options={}, ref_shapes=(), f_offset=0):\n",
+          "after": "    def rope(self, h, w, text_len, device, transformer_options={}, ref_shapes=(), f_offset=0, ref_rope_offsets=None):\n"
+        },
+        {
+          "start": 190,
+          "stop": 190,
+          "before": "",
+          "after": "            if ref_rope_offsets is not None:\n                ref[:, 2] += ref_rope_offsets[i][0]\n                ref[:, 3] += ref_rope_offsets[i][1]\n"
+        },
+        {
+          "start": 197,
+          "stop": 198,
+          "before": "    def preprocess_refs(self, refs, transformer_options={}):\n",
+          "after": "    def preprocess_refs(self, refs, transformer_options={}, ref_rope_offsets=None):\n"
+        },
+        {
+          "start": 201,
+          "stop": 202,
+          "before": "        pe = self.rope(0, 0, 0, x.device, transformer_options, [ref.shape[-2:] for ref in refs])\n",
+          "after": "        pe = self.rope(0, 0, 0, x.device, transformer_options, [ref.shape[-2:] for ref in refs], ref_rope_offsets=ref_rope_offsets)\n"
+        },
+        {
+          "start": 219,
+          "stop": 220,
+          "before": "    def _forward(self, x, timestep, context, transformer_options={}, ref_latents=[], ref_latents_method=None, ref_kv=None, context_attention_bias=None, **kwargs):\n",
+          "after": "    def _forward(self, x, timestep, context, transformer_options={}, ref_latents=[], ref_latents_method=None, ref_kv=None, context_attention_bias=None, ref_rope_offsets=None, ref_query_mask=None, ref_allow_text=True, context_vision_mask=None, image_to_text_mask=None, text_attention_mask=None, text_to_ref_mask=None, mask_text_self_attention=False, dit_text_mask=None, mask_text_embedder=False, **kwargs):\n"
+        },
+        {
+          "start": 226,
+          "stop": 227,
+          "before": "            ref_kv, ref_latents = self.preprocess_refs(ref_latents, transformer_options), []\n",
+          "after": "            ref_kv, ref_latents = self.preprocess_refs(ref_latents, transformer_options, ref_rope_offsets), []\n"
+        },
+        {
+          "start": 233,
+          "stop": 234,
+          "before": "        pe = self.rope(H, W, text_len, device, transformer_options, [ref.shape[-2:] for ref in refs], f_offset)\n",
+          "after": "        pe = self.rope(H, W, text_len, device, transformer_options, [ref.shape[-2:] for ref in refs], f_offset, ref_rope_offsets)\n"
+        },
+        {
+          "start": 249,
+          "stop": 249,
+          "before": "",
+          "after": "        if (mask_text_embedder or mask_text_self_attention) and text_attention_mask is not None:\n            scope = text_attention_mask.to(device=device)\n            scope = torch.zeros_like(scope, dtype=dtype).masked_fill(~scope, -torch.inf) if scope.dtype == torch.bool else scope.to(dtype=dtype)\n            scope = scope[:, None]\n            text_mask = scope if text_mask is None else text_mask + scope\n        if ref_query_mask is not None or image_to_text_mask is not None or text_to_ref_mask is not None or dit_text_mask is not None or (mask_text_self_attention and text_attention_mask is not None):\n            inline_refs = sum(r.shape[-2] * r.shape[-1] for r in refs)\n            region_mask = reference_attention_mask(H * W, text_len, inline_refs + (0 if ref_kv is None else ref_kv.shape[3]), device, dtype, ref_query_mask, ref_allow_text, context_vision_mask, inline_refs, image_to_text_mask, text_attention_mask, text_to_ref_mask, mask_text_self_attention, dit_text_mask)\n            mask = region_mask if mask is None else mask + region_mask\n"
+        }
+      ]
+    },
+    {
+      "path": "comfy/model_base.py",
+      "base_sha256": "e7d08a4450287c76994b109437fbd03d721cf373fc8214bb9c30c478db060ffe",
+      "patched_sha256": "ff9de66840c11d3810dce07c7ea6717e48ee7a427f0a042439fcd999da0fea8e",
+      "edits": [
+        {
+          "start": 2845,
+          "stop": 2845,
+          "before": "",
+          "after": "        ref_rope_offsets = kwargs.get(\"ref_rope_offsets\", None)\n        for key in (\"ref_rope_offsets\", \"ref_allow_text\", \"mask_text_self_attention\", \"mask_text_embedder\"):\n            if key in kwargs:\n                out[key] = comfy.conds.CONDConstant(kwargs[key])\n        for key in (\"ref_query_mask\", \"context_vision_mask\", \"image_to_text_mask\", \"text_attention_mask\", \"text_to_ref_mask\", \"dit_text_mask\"):\n            if kwargs.get(key) is not None:\n                out[key] = comfy.conds.CONDRegular(kwargs[key])\n"
+        },
+        {
+          "start": 2856,
+          "stop": 2857,
+          "before": "                out['ref_kv'] = comfy.conds.CONDConstant(self.diffusion_model.preprocess_refs([lat.to(device=device, dtype=dtype) for lat in ref_latents]))\n",
+          "after": "                out['ref_kv'] = comfy.conds.CONDConstant(self.diffusion_model.preprocess_refs([lat.to(device=device, dtype=dtype) for lat in ref_latents], ref_rope_offsets=ref_rope_offsets))\n"
+        }
+      ]
+    }
+  ]
+}

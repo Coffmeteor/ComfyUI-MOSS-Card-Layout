@@ -9,7 +9,7 @@
       "type": "MOSSImageHFLoader",
       "pos": [
         0,
-        2310
+        1280
       ],
       "size": [
         440,
@@ -18,38 +18,9 @@
       "flags": {},
       "order": 0,
       "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "model_path",
-          "name": "model_path",
-          "type": "STRING",
-          "widget": {
-            "name": "model_path"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "weight_dtype",
-          "name": "weight_dtype",
-          "type": "COMBO",
-          "widget": {
-            "name": "weight_dtype"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "text_device",
-          "name": "text_device",
-          "type": "COMBO",
-          "widget": {
-            "name": "text_device"
-          },
-          "link": null
-        }
-      ],
+      "inputs": [],
       "outputs": [
         {
-          "localized_name": "MODEL",
           "name": "MODEL",
           "type": "MODEL",
           "links": [
@@ -57,7 +28,6 @@
           ]
         },
         {
-          "localized_name": "CLIP",
           "name": "CLIP",
           "type": "CLIP",
           "links": [
@@ -66,7 +36,6 @@
           ]
         },
         {
-          "localized_name": "VAE",
           "name": "VAE",
           "type": "VAE",
           "links": [
@@ -75,20 +44,22 @@
         }
       ],
       "properties": {
+        "Node name for S&R": "MOSSImageHFLoader",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
         },
-        "Node name for S&R": "MOSSImageHFLoader"
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
       },
       "widgets_values": [
-        "MOSS-Image-SFT",
+        "/home/coffmetoer/comfy/ComfyUI/models/diffusers/MOSS-Image-SFT",
         "bf16",
         "default"
       ],
       "widgets_values_named": {
-        "model_path": "MOSS-Image-SFT",
+        "model_path": "/home/coffmetoer/comfy/ComfyUI/models/diffusers/MOSS-Image-SFT",
         "weight_dtype": "bf16",
         "text_device": "default"
       }
@@ -98,7 +69,7 @@
       "type": "CLIPTextEncode",
       "pos": [
         0,
-        2640
+        1610
       ],
       "size": [
         440,
@@ -109,13 +80,11 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "clip",
           "name": "clip",
           "type": "CLIP",
           "link": 2
         },
         {
-          "localized_name": "text",
           "name": "text",
           "type": "STRING",
           "widget": {
@@ -126,7 +95,6 @@
       ],
       "outputs": [
         {
-          "localized_name": "CONDITIONING",
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
@@ -136,12 +104,12 @@
       ],
       "title": "moss-image Positive",
       "properties": {
+        "Node name for S&R": "CLIPTextEncode",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        },
-        "Node name for S&R": "CLIPTextEncode"
+        }
       },
       "widgets_values": [
         ""
@@ -155,7 +123,7 @@
       "type": "CLIPTextEncode",
       "pos": [
         500,
-        2640
+        1610
       ],
       "size": [
         440,
@@ -166,24 +134,13 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "clip",
           "name": "clip",
           "type": "CLIP",
           "link": 3
-        },
-        {
-          "localized_name": "text",
-          "name": "text",
-          "type": "STRING",
-          "widget": {
-            "name": "text"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "localized_name": "CONDITIONING",
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
@@ -193,12 +150,12 @@
       ],
       "title": "moss-image Negative",
       "properties": {
+        "Node name for S&R": "CLIPTextEncode",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        },
-        "Node name for S&R": "CLIPTextEncode"
+        }
       },
       "widgets_values": [
         ""
@@ -212,7 +169,7 @@
       "type": "EmptyFlux2LatentImage",
       "pos": [
         1000,
-        2640
+        1610
       ],
       "size": [
         440,
@@ -223,7 +180,6 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "width",
           "name": "width",
           "type": "INT",
           "widget": {
@@ -232,27 +188,16 @@
           "link": 4
         },
         {
-          "localized_name": "height",
           "name": "height",
           "type": "INT",
           "widget": {
             "name": "height"
           },
           "link": 5
-        },
-        {
-          "localized_name": "batch_size",
-          "name": "batch_size",
-          "type": "INT",
-          "widget": {
-            "name": "batch_size"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "localized_name": "LATENT",
           "name": "LATENT",
           "type": "LATENT",
           "links": [
@@ -261,12 +206,12 @@
         }
       ],
       "properties": {
+        "Node name for S&R": "EmptyFlux2LatentImage",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        },
-        "Node name for S&R": "EmptyFlux2LatentImage"
+        }
       },
       "widgets_values": [
         1024,
@@ -284,7 +229,7 @@
       "type": "ModelSamplingSD3",
       "pos": [
         1000,
-        2310
+        1280
       ],
       "size": [
         440,
@@ -295,24 +240,13 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "model",
           "name": "model",
           "type": "MODEL",
           "link": 6
-        },
-        {
-          "localized_name": "shift",
-          "name": "shift",
-          "type": "FLOAT",
-          "widget": {
-            "name": "shift"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "localized_name": "MODEL",
           "name": "MODEL",
           "type": "MODEL",
           "links": [
@@ -322,12 +256,12 @@
       ],
       "title": "Official Flow sigma shift",
       "properties": {
+        "Node name for S&R": "ModelSamplingSD3",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        },
-        "Node name for S&R": "ModelSamplingSD3"
+        }
       },
       "widgets_values": [
         5
@@ -341,7 +275,7 @@
       "type": "KSampler",
       "pos": [
         0,
-        2990
+        1960
       ],
       "size": [
         440,
@@ -352,87 +286,28 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "model",
           "name": "model",
           "type": "MODEL",
           "link": 7
         },
         {
-          "localized_name": "positive",
           "name": "positive",
           "type": "CONDITIONING",
           "link": 8
         },
         {
-          "localized_name": "negative",
           "name": "negative",
           "type": "CONDITIONING",
           "link": 9
         },
         {
-          "localized_name": "latent_image",
           "name": "latent_image",
           "type": "LATENT",
           "link": 10
-        },
-        {
-          "localized_name": "seed",
-          "name": "seed",
-          "type": "INT",
-          "widget": {
-            "name": "seed"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "steps",
-          "name": "steps",
-          "type": "INT",
-          "widget": {
-            "name": "steps"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "cfg",
-          "name": "cfg",
-          "type": "FLOAT",
-          "widget": {
-            "name": "cfg"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "sampler_name",
-          "name": "sampler_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "sampler_name"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "scheduler",
-          "name": "scheduler",
-          "type": "COMBO",
-          "widget": {
-            "name": "scheduler"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "denoise",
-          "name": "denoise",
-          "type": "FLOAT",
-          "widget": {
-            "name": "denoise"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "localized_name": "LATENT",
           "name": "LATENT",
           "type": "LATENT",
           "links": [
@@ -441,12 +316,12 @@
         }
       ],
       "properties": {
+        "Node name for S&R": "KSampler",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        },
-        "Node name for S&R": "KSampler"
+        }
       },
       "widgets_values": [
         42,
@@ -472,7 +347,7 @@
       "type": "VAEDecode",
       "pos": [
         500,
-        2990
+        1960
       ],
       "size": [
         440,
@@ -483,13 +358,11 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "samples",
           "name": "samples",
           "type": "LATENT",
           "link": 11
         },
         {
-          "localized_name": "vae",
           "name": "vae",
           "type": "VAE",
           "link": 12
@@ -497,7 +370,6 @@
       ],
       "outputs": [
         {
-          "localized_name": "IMAGE",
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
@@ -506,60 +378,49 @@
         }
       ],
       "properties": {
+        "Node name for S&R": "VAEDecode",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        },
-        "Node name for S&R": "VAEDecode"
+        }
       }
     },
     {
       "id": 18,
       "type": "SaveImage",
       "pos": [
-        0,
-        1240
+        1500,
+        80
       ],
       "size": [
-        1440,
-        850
+        1100,
+        650
       ],
       "flags": {},
       "order": 13,
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
           "link": 13
-        },
-        {
-          "localized_name": "filename_prefix",
-          "name": "filename_prefix",
-          "type": "STRING",
-          "widget": {
-            "name": "filename_prefix"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "localized_name": "images",
           "name": "images",
           "type": "IMAGE",
           "links": null
         }
       ],
       "properties": {
+        "Node name for S&R": "SaveImage",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        },
-        "Node name for S&R": "SaveImage"
+        }
       },
       "widgets_values": [
         "MOSS Independent Acceleration"
@@ -573,7 +434,7 @@
       "type": "LoraLoaderModelOnly",
       "pos": [
         500,
-        2310
+        1280
       ],
       "size": [
         440,
@@ -584,33 +445,13 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "model",
           "name": "model",
           "type": "MODEL",
           "link": 14
-        },
-        {
-          "localized_name": "lora_name",
-          "name": "lora_name",
-          "type": "COMBO",
-          "widget": {
-            "name": "lora_name"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "strength_model",
-          "name": "strength_model",
-          "type": "FLOAT",
-          "widget": {
-            "name": "strength_model"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "localized_name": "MODEL",
           "name": "MODEL",
           "type": "MODEL",
           "links": [
@@ -619,12 +460,12 @@
         }
       ],
       "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        },
-        "Node name for S&R": "LoraLoaderModelOnly"
+        }
       },
       "widgets_values": [
         "moss-image/MOSS Image Independent Sixteen LoRA.safetensors",
@@ -651,72 +492,23 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "character",
           "name": "character",
           "type": "STRING",
           "link": 15
         },
         {
-          "localized_name": "outfit_description",
           "name": "outfit_description",
           "type": "STRING",
           "link": 16
         },
         {
-          "localized_name": "portrait_clothing",
           "name": "portrait_clothing",
           "type": "STRING",
           "link": 17
-        },
-        {
-          "localized_name": "long_edge",
-          "name": "long_edge",
-          "type": "INT",
-          "widget": {
-            "name": "long_edge"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "short_edge",
-          "name": "short_edge",
-          "type": "INT",
-          "widget": {
-            "name": "short_edge"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "privacy_blocks",
-          "name": "privacy_blocks",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "privacy_blocks"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "lighting",
-          "name": "lighting",
-          "type": "COMBO",
-          "widget": {
-            "name": "lighting"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "reference_identity",
-          "name": "reference_identity",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "reference_identity"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "localized_name": "layout_json",
           "name": "layout_json",
           "type": "STRING",
           "links": [
@@ -724,7 +516,6 @@
           ]
         },
         {
-          "localized_name": "width",
           "name": "width",
           "type": "INT",
           "links": [
@@ -732,7 +523,6 @@
           ]
         },
         {
-          "localized_name": "height",
           "name": "height",
           "type": "INT",
           "links": [
@@ -742,23 +532,25 @@
       ],
       "title": "Card settings - Four panels",
       "properties": {
+        "Node name for S&R": "MOSSCharacterCardComposer",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
         },
-        "Node name for S&R": "MOSSCharacterCardComposer"
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
       },
       "widgets_values": [
-        1536,
-        864,
+        1824,
+        1024,
         true,
         "Soft even studio light",
         false
       ],
       "widgets_values_named": {
-        "long_edge": 1536,
-        "short_edge": 864,
+        "long_edge": 1824,
+        "short_edge": 1024,
         "privacy_blocks": true,
         "lighting": "Soft even studio light",
         "reference_identity": false
@@ -778,35 +570,14 @@
       "flags": {},
       "order": 1,
       "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "face_id",
-          "name": "face_id",
-          "type": "STRING",
-          "widget": {
-            "name": "face_id"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "description_override",
-          "name": "description_override",
-          "type": "STRING",
-          "widget": {
-            "name": "description_override"
-          },
-          "link": null
-        }
-      ],
+      "inputs": [],
       "outputs": [
         {
-          "localized_name": "reference_image",
           "name": "reference_image",
           "type": "IMAGE",
           "links": null
         },
         {
-          "localized_name": "face_description",
           "name": "face_description",
           "type": "STRING",
           "links": [
@@ -814,22 +585,28 @@
           ]
         },
         {
-          "localized_name": "reference_hair",
           "name": "reference_hair",
           "type": "STRING",
           "links": [
             19
           ]
+        },
+        {
+          "name": "reference_framing",
+          "type": "STRING",
+          "links": null
         }
       ],
       "title": "1. Face library",
       "properties": {
+        "Node name for S&R": "MOSSFaceLibrary",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
         },
-        "Node name for S&R": "MOSSFaceLibrary"
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
       },
       "widgets_values": [
         "f71f980dde3",
@@ -851,100 +628,25 @@
       ],
       "size": [
         440,
-        310
+        330
       ],
       "flags": {},
       "order": 5,
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "face_description",
           "name": "face_description",
           "type": "STRING",
           "link": 18
         },
         {
-          "localized_name": "reference_hair",
           "name": "reference_hair",
           "type": "STRING",
           "link": 19
-        },
-        {
-          "localized_name": "age_mode",
-          "name": "age_mode",
-          "type": "COMBO",
-          "widget": {
-            "name": "age_mode"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "age",
-          "name": "age",
-          "type": "INT",
-          "widget": {
-            "name": "age"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "presentation",
-          "name": "presentation",
-          "type": "COMBO",
-          "widget": {
-            "name": "presentation"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "body_shape",
-          "name": "body_shape",
-          "type": "COMBO",
-          "widget": {
-            "name": "body_shape"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "hair_style",
-          "name": "hair_style",
-          "type": "COMBO",
-          "widget": {
-            "name": "hair_style"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "hair_color",
-          "name": "hair_color",
-          "type": "COMBO",
-          "widget": {
-            "name": "hair_color"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "expression",
-          "name": "expression",
-          "type": "COMBO",
-          "widget": {
-            "name": "expression"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "extra_character_details",
-          "name": "extra_character_details",
-          "type": "STRING",
-          "widget": {
-            "name": "extra_character_details"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "localized_name": "character",
           "name": "character",
           "type": "STRING",
           "links": [
@@ -954,12 +656,14 @@
       ],
       "title": "2. Character settings",
       "properties": {
+        "Node name for S&R": "MOSSCharacterSettings",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
         },
-        "Node name for S&R": "MOSSCharacterSettings"
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
       },
       "widgets_values": [
         "Set age",
@@ -969,6 +673,7 @@
         "From face selection",
         "From face selection",
         "From face selection",
+        "",
         ""
       ],
       "widgets_values_named": {
@@ -979,7 +684,8 @@
         "hair_style": "From face selection",
         "hair_color": "From face selection",
         "expression": "From face selection",
-        "extra_character_details": ""
+        "extra_character_details": "",
+        "body_appearance": ""
       }
     },
     {
@@ -996,29 +702,9 @@
       "flags": {},
       "order": 2,
       "mode": 0,
-      "inputs": [
-        {
-          "localized_name": "outfit_id",
-          "name": "outfit_id",
-          "type": "STRING",
-          "widget": {
-            "name": "outfit_id"
-          },
-          "link": null
-        },
-        {
-          "localized_name": "extra_outfit_details",
-          "name": "extra_outfit_details",
-          "type": "STRING",
-          "widget": {
-            "name": "extra_outfit_details"
-          },
-          "link": null
-        }
-      ],
+      "inputs": [],
       "outputs": [
         {
-          "localized_name": "outfit_description",
           "name": "outfit_description",
           "type": "STRING",
           "links": [
@@ -1026,7 +712,6 @@
           ]
         },
         {
-          "localized_name": "portrait_clothing",
           "name": "portrait_clothing",
           "type": "STRING",
           "links": [
@@ -1036,12 +721,14 @@
       ],
       "title": "3. Outfit library",
       "properties": {
+        "Node name for S&R": "MOSSOutfitLibrary",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
         },
-        "Node name for S&R": "MOSSOutfitLibrary"
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
       },
       "widgets_values": [
         "SPR-0048",
@@ -1070,7 +757,6 @@
       "mode": 0,
       "inputs": [
         {
-          "localized_name": "source",
           "name": "source",
           "type": "*",
           "link": 20
@@ -1078,7 +764,6 @@
       ],
       "outputs": [
         {
-          "localized_name": "STRING",
           "name": "STRING",
           "type": "STRING",
           "links": [
@@ -1088,12 +773,12 @@
       ],
       "title": "Final JSON sent to MOSS",
       "properties": {
+        "Node name for S&R": "PreviewAny",
         "ue_properties": {
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        },
-        "Node name for S&R": "PreviewAny"
+        }
       },
       "widgets_values": [],
       "widgets_values_named": {}
@@ -1314,10 +999,10 @@
       "id": 5,
       "title": "05  Result",
       "bounding": [
-        -20,
-        1160,
         1480,
-        990
+        0,
+        1140,
+        730
       ],
       "color": "#53645d",
       "flags": {}
@@ -1327,7 +1012,7 @@
       "title": "Advanced  Model and sampling",
       "bounding": [
         -20,
-        2230,
+        1200,
         1480,
         1140
       ],
@@ -1339,12 +1024,17 @@
   "extra": {
     "ue_links": [],
     "ds": {
-      "scale": 0.65,
+      "scale": 0.36,
       "offset": [
-        150,
-        280
+        200,
+        450
       ]
-    }
+    },
+    "frontendVersion": "1.57.4",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
   },
   "version": 0.4
 }

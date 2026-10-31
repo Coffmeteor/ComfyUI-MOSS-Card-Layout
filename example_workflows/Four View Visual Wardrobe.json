@@ -158,7 +158,9 @@
           "input_ue_unconnectable": {},
           "version": "7.8",
           "widget_ue_connectable": {}
-        }
+        },
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
       },
       "widgets_values": [
         "models/diffusers/MOSS-Image-SFT",
@@ -1108,7 +1110,9 @@
           "widget_ue_connectable": {},
           "input_ue_unconnectable": {},
           "version": "7.8"
-        }
+        },
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
       },
       "widgets_values": [
         1824,

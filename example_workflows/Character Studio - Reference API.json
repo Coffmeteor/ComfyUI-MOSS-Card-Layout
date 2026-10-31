@@ -1,0 +1,270 @@
+{
+  "9": {
+    "inputs": {
+      "filename_prefix": "MOSS Character Studio Reference",
+      "images": [
+        "38",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "28": {
+    "inputs": {
+      "width": [
+        "40",
+        1
+      ],
+      "height": [
+        "40",
+        2
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyFlux2LatentImage",
+    "_meta": {
+      "title": "Empty Flux 2 Latent"
+    }
+  },
+  "31": {
+    "inputs": {
+      "lora_name": "moss/MOSS-Character-Studio-Reference-BF16.safetensors",
+      "strength_model": 1.0,
+      "model": [
+        "30",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "32": {
+    "inputs": {
+      "double_layers": "",
+      "single_layers": "22",
+      "start_percent": 0,
+      "end_percent": 1,
+      "model": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "SkipLayerGuidanceDiTSimple",
+    "_meta": {
+      "title": "SkipLayerGuidanceDiTSimple"
+    }
+  },
+  "36": {
+    "class_type": "MOSSAnchoredReferenceEncode",
+    "inputs": {
+      "clip": [
+        "30",
+        1
+      ],
+      "vae": [
+        "30",
+        2
+      ],
+      "reference_image": [
+        "41",
+        0
+      ],
+      "prompt": "",
+      "layout_json": [
+        "44",
+        0
+      ],
+      "canvas_width": [
+        "40",
+        1
+      ],
+      "canvas_height": [
+        "40",
+        2
+      ],
+      "ref_allow_text": true,
+      "mask_vision_tokens": false,
+      "anchor_mode": "full_portrait_panel",
+      "panel_scoped_text": true,
+      "reference_framing": "auto_portrait",
+      "mask_text_self_attention": false,
+      "mask_text_embedder": false
+    }
+  },
+  "37": {
+    "inputs": {
+      "seed": 42,
+      "steps": 25,
+      "cfg": 3.0,
+      "sampler_name": "euler",
+      "scheduler": "sgm_uniform",
+      "denoise": 1,
+      "model": [
+        "32",
+        0
+      ],
+      "positive": [
+        "39",
+        0
+      ],
+      "negative": [
+        "36",
+        0
+      ],
+      "latent_image": [
+        "28",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "38": {
+    "inputs": {
+      "samples": [
+        "37",
+        0
+      ],
+      "vae": [
+        "30",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "39": {
+    "class_type": "MOSSAnchoredReferenceEncode",
+    "inputs": {
+      "clip": [
+        "30",
+        1
+      ],
+      "vae": [
+        "30",
+        2
+      ],
+      "reference_image": [
+        "41",
+        0
+      ],
+      "prompt": [
+        "44",
+        0
+      ],
+      "layout_json": [
+        "44",
+        0
+      ],
+      "canvas_width": [
+        "40",
+        1
+      ],
+      "canvas_height": [
+        "40",
+        2
+      ],
+      "ref_allow_text": true,
+      "mask_vision_tokens": false,
+      "anchor_mode": "full_portrait_panel",
+      "panel_scoped_text": true,
+      "reference_framing": "auto_portrait",
+      "mask_text_self_attention": false,
+      "mask_text_embedder": false
+    }
+  },
+  "30": {
+    "class_type": "MOSSStudioHFLoader",
+    "inputs": {
+      "model_path": "MOSS-Image-SFT"
+    }
+  },
+  "33": {
+    "class_type": "ModelSamplingAuraFlow",
+    "inputs": {
+      "model": [
+        "31",
+        0
+      ],
+      "shift": 5.0,
+      "sampling": "flow"
+    }
+  },
+  "41": {
+    "class_type": "MOSSFaceLibrary",
+    "inputs": {
+      "face_id": "f71f980dde3",
+      "description_override": ""
+    }
+  },
+  "42": {
+    "class_type": "MOSSCharacterSettings",
+    "inputs": {
+      "age_mode": "Unspecified adult age",
+      "age": 25,
+      "presentation": "From face selection",
+      "body_shape": "slim",
+      "hair_style": "From face selection",
+      "hair_color": "From face selection",
+      "expression": "From face selection",
+      "extra_character_details": "",
+      "face_description": [
+        "41",
+        1
+      ],
+      "reference_hair": [
+        "41",
+        2
+      ],
+      "body_appearance": "",
+      "skin_tone": "From face selection"
+    }
+  },
+  "43": {
+    "class_type": "MOSSOutfitLibrary",
+    "inputs": {
+      "outfit_id": "SPR-0048",
+      "extra_outfit_details": ""
+    }
+  },
+  "40": {
+    "class_type": "MOSSCharacterCardComposer",
+    "inputs": {
+      "long_edge": 1536,
+      "short_edge": 864,
+      "privacy_blocks": true,
+      "character": [
+        "42",
+        0
+      ],
+      "outfit_description": [
+        "43",
+        0
+      ],
+      "portrait_clothing": [
+        "43",
+        1
+      ],
+      "lighting": "Soft even studio light",
+      "reference_identity": true
+    }
+  },
+  "44": {
+    "class_type": "PreviewAny",
+    "inputs": {
+      "source": [
+        "40",
+        0
+      ]
+    }
+  }
+}

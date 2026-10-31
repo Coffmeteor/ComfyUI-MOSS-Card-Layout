@@ -1,4 +1,5 @@
 """User-owned face/outfit assets, stored outside the updatable node package."""
+
 from __future__ import annotations
 import hashlib
 import json
@@ -11,89 +12,152 @@ from io import BytesIO
 from PIL import Image, ImageOps
 
 _LOCK = threading.RLock()
-KINDS = {'faces', 'outfits'}
+KINDS = {"faces", "outfits"}
 
 
 def root() -> Path:
     import folder_paths
-    return Path(folder_paths.get_user_directory()) / 'moss-card-layout/library'
+
+    return Path(folder_paths.get_user_directory()) / "moss-card-layout/library"
 
 
 def kind_root(kind: str) -> Path:
     if kind not in KINDS:
-        raise ValueError('Unknown library type')
+        raise ValueError("Unknown library type")
     return root() / kind
 
 
 def valid_id(identifier: str) -> str:
-    if not re.fullmatch(r'USER-[A-F0-9]{32}', identifier):
-        raise ValueError('Invalid user asset identifier')
+    if not re.fullmatch(r"USER-[A-F0-9]{32}", identifier):
+        raise ValueError("Invalid user asset identifier")
     return identifier
 
 
 def entries(kind: str) -> list[dict]:
     directory = kind_root(kind)
     with _LOCK:
-        return [json.loads(p.read_text()) for p in sorted(directory.glob('USER-*/entry.json'))]
+        return [
+            json.loads(p.read_text())
+            for p in sorted(directory.glob("USER-*/entry.json"))
+        ]
 
 
 def get(kind: str, identifier: str) -> dict:
     with _LOCK:
-        return json.loads((kind_root(kind) / valid_id(identifier) / 'entry.json').read_text())
+        return json.loads(
+            (kind_root(kind) / valid_id(identifier) / "entry.json").read_text()
+        )
 
 
 def image_path(kind: str, identifier: str) -> Path:
     get(kind, identifier)
-    return kind_root(kind) / identifier / 'image.png'
+    return kind_root(kind) / identifier / "image.png"
 
 
 def fields(data: dict, kind: str) -> dict:
-    allowed = {'label','tags','description','portrait_description','hair_description',
-               'front_details','back_details','asymmetries','prompt_contract_version','expression_description','hair_color'}
+    allowed = {
+        "label",
+        "tags",
+        "description",
+        "portrait_description",
+        "hair_description",
+        "front_details",
+        "back_details",
+        "asymmetries",
+        "prompt_contract_version",
+        "expression_description",
+        "hair_color",
+    }
     if set(data) - allowed:
-        raise ValueError('Unknown library fields: ' + ', '.join(sorted(set(data) - allowed)))
-    if data.get('prompt_contract_version',2) != 2:
-        raise ValueError('Unsupported library prompt contract version')
+        raise ValueError(
+            "Unknown library fields: " + ", ".join(sorted(set(data) - allowed))
+        )
+    if data.get("prompt_contract_version", 2) != 2:
+        raise ValueError("Unsupported library prompt contract version")
+
     def text(key: str, maximum: int, required: bool = False) -> str:
-        value = data.get(key, '')
-        if not isinstance(value, str) or len(value) > maximum or (required and not value.strip()):
-            raise ValueError(f'Invalid {key}')
+        value = data.get(key, "")
+        if (
+            not isinstance(value, str)
+            or len(value) > maximum
+            or (required and not value.strip())
+        ):
+            raise ValueError(f"Invalid {key}")
         return value.strip()
-    label = text('label', 120, True)
-    description = text('description', 6000, True)
-    portrait = text('portrait_description', 3000)
-    tags = data.get('tags', [])
-    if isinstance(tags, str): tags = [x.strip() for x in tags.split(',') if x.strip()]
-    if not isinstance(tags, list) or len(tags) > 24 or any(not isinstance(t, str) or len(t) > 60 for t in tags):
-        raise ValueError('Use up to 24 short tags')
-    if kind == 'outfits' and not portrait:
-        raise ValueError('Describe upper-body clothing for the portrait separately')
-    if kind == 'outfits':
+
+    label = text("label", 120, True)
+    description = text("description", 6000, True)
+    portrait = text("portrait_description", 3000)
+    tags = data.get("tags", [])
+    if isinstance(tags, str):
+        tags = [x.strip() for x in tags.split(",") if x.strip()]
+    if (
+        not isinstance(tags, list)
+        or len(tags) > 24
+        or any(not isinstance(t, str) or len(t) > 60 for t in tags)
+    ):
+        raise ValueError("Use up to 24 short tags")
+    if kind == "outfits" and not portrait:
+        raise ValueError("Describe upper-body clothing for the portrait separately")
+    if kind == "outfits":
         from .outfit_contract import validate_spec, render_view
-        spec = validate_spec(dict(schema_version=2,shared=description,
-            front=text('front_details',3000), back=text('back_details',3000), portrait=portrait,
-            asymmetries=data.get('asymmetries',[])))
-        front_description, back_description = render_view(spec,'front'), render_view(spec,'back')
+
+        spec = validate_spec(
+            dict(
+                schema_version=2,
+                shared=description,
+                front=text("front_details", 3000),
+                back=text("back_details", 3000),
+                portrait=portrait,
+                asymmetries=data.get("asymmetries", []),
+            )
+        )
+        front_description, back_description = (
+            render_view(spec, "front"),
+            render_view(spec, "back"),
+        )
     else:
-        spec = None; front_description = back_description = ''
+        spec = None
+        front_description = back_description = ""
         from .face_contract import validate_face
-        face_spec = validate_face(dict(schema_version=2,geometry=description,
-            hair=dict(style=text('hair_description',1000),color=text('hair_color',120)),
-            expression=text('expression_description',1000)))
-    return {'label':label, 'description':description, 'body_description':description if kind == 'outfits' else '',
-            'prompt_contract_version':2, 'portrait_description':portrait, 'outfit_spec':spec,
-            'front_details':text('front_details',3000), 'back_details':text('back_details',3000),
-            'asymmetries':spec['asymmetries'] if kind=='outfits' else [],
-            'front_description':front_description, 'back_description':back_description,
-            'category':'My library', 'tags':list(dict.fromkeys(tags)), 'keywords':' '.join(tags),
-            'face_spec':face_spec if kind=='faces' else None,
-            'hair_color':text('hair_color',120), 'expression_description':text('expression_description',1000),
-            'hair_description':text('hair_description', 1000), 'source':'user', 'editable':True}
+
+        face_spec = validate_face(
+            dict(
+                schema_version=2,
+                geometry=description,
+                hair=dict(
+                    style=text("hair_description", 1000), color=text("hair_color", 120)
+                ),
+                expression=text("expression_description", 1000),
+            )
+        )
+    return {
+        "label": label,
+        "description": description,
+        "body_description": description if kind == "outfits" else "",
+        "prompt_contract_version": 2,
+        "portrait_description": portrait,
+        "outfit_spec": spec,
+        "front_details": text("front_details", 3000),
+        "back_details": text("back_details", 3000),
+        "asymmetries": spec["asymmetries"] if kind == "outfits" else [],
+        "front_description": front_description,
+        "back_description": back_description,
+        "category": "My library",
+        "tags": list(dict.fromkeys(tags)),
+        "keywords": " ".join(tags),
+        "face_spec": face_spec if kind == "faces" else None,
+        "hair_color": text("hair_color", 120),
+        "expression_description": text("expression_description", 1000),
+        "hair_description": text("hair_description", 1000),
+        "source": "user",
+        "editable": True,
+    }
 
 
 def atomic_json(path: Path, value: dict) -> None:
-    temporary = path.with_name(path.name + '.part')
-    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2)+'\n')
+    temporary = path.with_name(path.name + ".part")
+    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
     os.replace(temporary, path)
 
 
@@ -101,21 +165,27 @@ def create(kind: str, data: dict, image: bytes) -> dict:
     directory = kind_root(kind)
     entry = fields(data, kind)
     if not image or len(image) > 16 * 1024 * 1024:
-        raise ValueError('Upload a PNG, JPEG or WebP image up to 16 MB')
+        raise ValueError("Upload a PNG, JPEG or WebP image up to 16 MB")
     try:
         with Image.open(BytesIO(image)) as source:
-            if source.format not in {'PNG','JPEG','WEBP'} or source.width * source.height > 32_000_000:
-                raise ValueError('Unsupported image format or dimensions')
-            normalized = ImageOps.exif_transpose(source).convert('RGB')
-            buffer = BytesIO();normalized.save(buffer, format='PNG');content = buffer.getvalue()
+            if (
+                source.format not in {"PNG", "JPEG", "WEBP"}
+                or source.width * source.height > 32_000_000
+            ):
+                raise ValueError("Unsupported image format or dimensions")
+            normalized = ImageOps.exif_transpose(source).convert("RGB")
+            buffer = BytesIO()
+            normalized.save(buffer, format="PNG")
+            content = buffer.getvalue()
     except (OSError, Image.DecompressionBombError) as exc:
-        raise ValueError('Upload a valid PNG, JPEG or WebP image') from exc
-    identifier = 'USER-' + uuid.uuid4().hex.upper()
+        raise ValueError("Upload a valid PNG, JPEG or WebP image") from exc
+    identifier = "USER-" + uuid.uuid4().hex.upper()
     entry.update(id=identifier, source_image_sha256=hashlib.sha256(content).hexdigest())
     with _LOCK:
-        target = directory / identifier;target.mkdir(parents=True)
-        (target/'image.png').write_bytes(content)
-        atomic_json(target/'entry.json',entry)
+        target = directory / identifier
+        target.mkdir(parents=True)
+        (target / "image.png").write_bytes(content)
+        atomic_json(target / "entry.json", entry)
     return entry
 
 
@@ -123,15 +193,18 @@ def update(kind: str, identifier: str, data: dict) -> dict:
     with _LOCK:
         original = get(kind, identifier)
         original.update(fields(data, kind))
-        atomic_json(kind_root(kind)/identifier/'entry.json',original)
+        atomic_json(kind_root(kind) / identifier / "entry.json", original)
         return original
 
 
 def trash(kind: str, identifier: str, restore: bool = False) -> None:
-    directory = kind_root(kind);identifier = valid_id(identifier)
-    active = directory/identifier;deleted = directory/'.trash'/identifier
+    directory = kind_root(kind)
+    identifier = valid_id(identifier)
+    active = directory / identifier
+    deleted = directory / ".trash" / identifier
     with _LOCK:
-        source,target = (deleted,active) if restore else (active,deleted)
-        if target.exists(): raise ValueError('Asset already exists at destination')
+        source, target = (deleted, active) if restore else (active, deleted)
+        if target.exists():
+            raise ValueError("Asset already exists at destination")
         target.parent.mkdir(parents=True, exist_ok=True)
         source.rename(target)

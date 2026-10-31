@@ -1,0 +1,1317 @@
+{
+  "revision": 0,
+  "last_node_id": 44,
+  "last_link_id": 31,
+  "nodes": [
+    {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [
+        1500,
+        80
+      ],
+      "size": [
+        1100,
+        650
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "MOSS Character Studio Reference"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "MOSS Character Studio Reference"
+      },
+      "title": "Save Image"
+    },
+    {
+      "id": 28,
+      "type": "EmptyFlux2LatentImage",
+      "pos": [
+        1200,
+        1620
+      ],
+      "size": [
+        440,
+        160
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "link": 2,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": 3,
+          "widget": {
+            "name": "height"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyFlux2LatentImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        1
+      ],
+      "widgets_values_named": {
+        "width": 1024,
+        "height": 1024,
+        "batch_size": 1
+      },
+      "title": "Empty Flux 2 Latent"
+    },
+    {
+      "id": 31,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        500,
+        1280
+      ],
+      "size": [
+        440,
+        160
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            25
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "models": [
+          {
+            "name": "MOSS-Character-Studio-Reference-BF16.safetensors",
+            "url": "https://huggingface.co/Coffmeteor/MOSS-Character-Studio/resolve/main/MOSS-Character-Studio-Reference-BF16.safetensors",
+            "directory": "loras/moss"
+          }
+        ]
+      },
+      "widgets_values": [
+        "moss/MOSS-Character-Studio-Reference-BF16.safetensors",
+        1.0
+      ],
+      "widgets_values_named": {
+        "lora_name": "moss/MOSS-Character-Studio-Reference-BF16.safetensors",
+        "strength_model": 1.0
+      },
+      "title": "Load LoRA"
+    },
+    {
+      "id": 32,
+      "type": "SkipLayerGuidanceDiTSimple",
+      "pos": [
+        1500,
+        1280
+      ],
+      "size": [
+        440,
+        240
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "title": "SkipLayerGuidanceDiTSimple",
+      "properties": {
+        "Node name for S&R": "SkipLayerGuidanceDiTSimple",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        "",
+        "22",
+        0,
+        1
+      ],
+      "widgets_values_named": {
+        "double_layers": "",
+        "single_layers": "22",
+        "start_percent": 0,
+        "end_percent": 1
+      }
+    },
+    {
+      "id": 36,
+      "type": "MOSSAnchoredReferenceEncode",
+      "pos": [
+        600,
+        1620
+      ],
+      "size": [
+        560,
+        620
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 6
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 7
+        },
+        {
+          "name": "reference_image",
+          "type": "IMAGE",
+          "link": 8
+        },
+        {
+          "name": "layout_json",
+          "type": "STRING",
+          "link": 9,
+          "widget": {
+            "name": "layout_json"
+          }
+        },
+        {
+          "name": "canvas_width",
+          "type": "INT",
+          "link": 10,
+          "widget": {
+            "name": "canvas_width"
+          }
+        },
+        {
+          "name": "canvas_height",
+          "type": "INT",
+          "link": 11,
+          "widget": {
+            "name": "canvas_height"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "title": "Portrait reference - negative",
+      "properties": {
+        "Node name for S&R": "MOSSAnchoredReferenceEncode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
+      },
+      "widgets_values": [
+        "",
+        "",
+        1536,
+        864,
+        true,
+        false,
+        "full_portrait_panel",
+        true,
+        false,
+        false,
+        "auto_portrait"
+      ],
+      "widgets_values_named": {
+        "prompt": "",
+        "layout_json": "",
+        "canvas_width": 1536,
+        "canvas_height": 864,
+        "ref_allow_text": true,
+        "mask_vision_tokens": false,
+        "anchor_mode": "full_portrait_panel",
+        "panel_scoped_text": true,
+        "mask_text_self_attention": false,
+        "mask_text_embedder": false,
+        "reference_framing": "auto_portrait"
+      }
+    },
+    {
+      "id": 37,
+      "type": "KSampler",
+      "pos": [
+        1200,
+        2040
+      ],
+      "size": [
+        440,
+        310
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 12
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 13
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 14
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        42,
+        "fixed",
+        25,
+        3.0,
+        "euler",
+        "sgm_uniform",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 42,
+        "control_after_generate": "fixed",
+        "steps": 25,
+        "cfg": 3.0,
+        "sampler_name": "euler",
+        "scheduler": "sgm_uniform",
+        "denoise": 1
+      },
+      "title": "KSampler"
+    },
+    {
+      "id": 38,
+      "type": "VAEDecode",
+      "pos": [
+        1700,
+        2040
+      ],
+      "size": [
+        440,
+        160
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 16
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [],
+      "widgets_values_named": {},
+      "title": "VAE Decode"
+    },
+    {
+      "id": 39,
+      "type": "MOSSAnchoredReferenceEncode",
+      "pos": [
+        0,
+        1620
+      ],
+      "size": [
+        560,
+        620
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 18
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 19
+        },
+        {
+          "name": "reference_image",
+          "type": "IMAGE",
+          "link": 20
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 21,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "layout_json",
+          "type": "STRING",
+          "link": 22,
+          "widget": {
+            "name": "layout_json"
+          }
+        },
+        {
+          "name": "canvas_width",
+          "type": "INT",
+          "link": 23,
+          "widget": {
+            "name": "canvas_width"
+          }
+        },
+        {
+          "name": "canvas_height",
+          "type": "INT",
+          "link": 24,
+          "widget": {
+            "name": "canvas_height"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "title": "Portrait reference - positive JSON",
+      "properties": {
+        "Node name for S&R": "MOSSAnchoredReferenceEncode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
+      },
+      "widgets_values": [
+        "",
+        "",
+        1536,
+        864,
+        true,
+        false,
+        "full_portrait_panel",
+        true,
+        false,
+        false,
+        "auto_portrait"
+      ],
+      "widgets_values_named": {
+        "prompt": "",
+        "layout_json": "",
+        "canvas_width": 1536,
+        "canvas_height": 864,
+        "ref_allow_text": true,
+        "mask_vision_tokens": false,
+        "anchor_mode": "full_portrait_panel",
+        "panel_scoped_text": true,
+        "mask_text_self_attention": false,
+        "mask_text_embedder": false,
+        "reference_framing": "auto_portrait"
+      }
+    },
+    {
+      "id": 30,
+      "type": "MOSSStudioHFLoader",
+      "pos": [
+        0,
+        1280
+      ],
+      "size": [
+        440,
+        240
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            4
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            6,
+            18
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            7,
+            17,
+            19
+          ]
+        }
+      ],
+      "title": "MOSS HF Snapshot - Native",
+      "properties": {
+        "Node name for S&R": "MOSSStudioHFLoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
+      },
+      "widgets_values": [
+        "MOSS-Image-SFT"
+      ],
+      "widgets_values_named": {
+        "model_path": "MOSS-Image-SFT"
+      }
+    },
+    {
+      "id": 33,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        1000,
+        1280
+      ],
+      "size": [
+        440,
+        240
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "title": "ModelSamplingAuraFlow",
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        5.0,
+        "flow"
+      ],
+      "widgets_values_named": {
+        "shift": 5.0,
+        "sampling": "flow"
+      }
+    },
+    {
+      "id": 41,
+      "type": "MOSSFaceLibrary",
+      "pos": [
+        0,
+        80
+      ],
+      "size": [
+        440,
+        540
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "reference_image",
+          "type": "IMAGE",
+          "links": [
+            8,
+            20
+          ]
+        },
+        {
+          "name": "face_description",
+          "type": "STRING",
+          "links": [
+            26
+          ]
+        },
+        {
+          "name": "reference_hair",
+          "type": "STRING",
+          "links": [
+            27
+          ]
+        },
+        {
+          "name": "reference_framing",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "title": "Face Library",
+      "properties": {
+        "Node name for S&R": "MOSSFaceLibrary",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
+      },
+      "widgets_values": [
+        "f71f980dde3",
+        "",
+        ""
+      ],
+      "widgets_values_named": {
+        "face_id": "f71f980dde3",
+        "description_override": "",
+        "library_preview": ""
+      }
+    },
+    {
+      "id": 42,
+      "type": "MOSSCharacterSettings",
+      "pos": [
+        500,
+        80
+      ],
+      "size": [
+        440,
+        330
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "face_description",
+          "type": "STRING",
+          "link": 26
+        },
+        {
+          "name": "reference_hair",
+          "type": "STRING",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "name": "character",
+          "type": "STRING",
+          "links": [
+            28
+          ]
+        }
+      ],
+      "title": "Character Settings",
+      "properties": {
+        "Node name for S&R": "MOSSCharacterSettings",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
+      },
+      "widgets_values": [
+        "Unspecified adult age",
+        25,
+        "From face selection",
+        "slim",
+        "From face selection",
+        "From face selection",
+        "From face selection",
+        "",
+        "",
+        "From face selection"
+      ],
+      "widgets_values_named": {
+        "age_mode": "Unspecified adult age",
+        "age": 25,
+        "presentation": "From face selection",
+        "body_shape": "slim",
+        "hair_style": "From face selection",
+        "hair_color": "From face selection",
+        "expression": "From face selection",
+        "extra_character_details": "",
+        "body_appearance": "",
+        "skin_tone": "From face selection"
+      }
+    },
+    {
+      "id": 43,
+      "type": "MOSSOutfitLibrary",
+      "pos": [
+        1000,
+        80
+      ],
+      "size": [
+        440,
+        540
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "outfit_description",
+          "type": "STRING",
+          "links": [
+            29
+          ]
+        },
+        {
+          "name": "portrait_clothing",
+          "type": "STRING",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "title": "Outfit Library",
+      "properties": {
+        "Node name for S&R": "MOSSOutfitLibrary",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
+      },
+      "widgets_values": [
+        "SPR-0048",
+        "",
+        ""
+      ],
+      "widgets_values_named": {
+        "outfit_id": "SPR-0048",
+        "extra_outfit_details": "",
+        "library_preview": ""
+      }
+    },
+    {
+      "id": 40,
+      "type": "MOSSCharacterCardComposer",
+      "pos": [
+        500,
+        500
+      ],
+      "size": [
+        440,
+        220
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "character",
+          "type": "STRING",
+          "link": 28
+        },
+        {
+          "name": "outfit_description",
+          "type": "STRING",
+          "link": 29
+        },
+        {
+          "name": "portrait_clothing",
+          "type": "STRING",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "layout_json",
+          "type": "STRING",
+          "links": [
+            31
+          ]
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            2,
+            10,
+            23
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            3,
+            11,
+            24
+          ]
+        }
+      ],
+      "title": "Four-Panel Card Settings",
+      "properties": {
+        "Node name for S&R": "MOSSCharacterCardComposer",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        },
+        "cnr_id": "comfyui-moss-card-layout",
+        "ver": "1.4.0"
+      },
+      "widgets_values": [
+        1536,
+        864,
+        true,
+        "Soft even studio light",
+        true
+      ],
+      "widgets_values_named": {
+        "long_edge": 1536,
+        "short_edge": 864,
+        "privacy_blocks": true,
+        "lighting": "Soft even studio light",
+        "reference_identity": true
+      }
+    },
+    {
+      "id": 44,
+      "type": "PreviewAny",
+      "pos": [
+        0,
+        850
+      ],
+      "size": [
+        1440,
+        220
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            9,
+            21,
+            22
+          ]
+        }
+      ],
+      "title": "Preview as Text",
+      "properties": {
+        "Node name for S&R": "PreviewAny",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    }
+  ],
+  "links": [
+    [
+      1,
+      38,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      40,
+      1,
+      28,
+      0,
+      "INT"
+    ],
+    [
+      3,
+      40,
+      2,
+      28,
+      1,
+      "INT"
+    ],
+    [
+      4,
+      30,
+      0,
+      31,
+      0,
+      "MODEL"
+    ],
+    [
+      5,
+      33,
+      0,
+      32,
+      0,
+      "MODEL"
+    ],
+    [
+      6,
+      30,
+      1,
+      36,
+      0,
+      "CLIP"
+    ],
+    [
+      7,
+      30,
+      2,
+      36,
+      1,
+      "VAE"
+    ],
+    [
+      8,
+      41,
+      0,
+      36,
+      2,
+      "IMAGE"
+    ],
+    [
+      9,
+      44,
+      0,
+      36,
+      3,
+      "STRING"
+    ],
+    [
+      10,
+      40,
+      1,
+      36,
+      4,
+      "INT"
+    ],
+    [
+      11,
+      40,
+      2,
+      36,
+      5,
+      "INT"
+    ],
+    [
+      12,
+      32,
+      0,
+      37,
+      0,
+      "MODEL"
+    ],
+    [
+      13,
+      39,
+      0,
+      37,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      14,
+      36,
+      0,
+      37,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      15,
+      28,
+      0,
+      37,
+      3,
+      "LATENT"
+    ],
+    [
+      16,
+      37,
+      0,
+      38,
+      0,
+      "LATENT"
+    ],
+    [
+      17,
+      30,
+      2,
+      38,
+      1,
+      "VAE"
+    ],
+    [
+      18,
+      30,
+      1,
+      39,
+      0,
+      "CLIP"
+    ],
+    [
+      19,
+      30,
+      2,
+      39,
+      1,
+      "VAE"
+    ],
+    [
+      20,
+      41,
+      0,
+      39,
+      2,
+      "IMAGE"
+    ],
+    [
+      21,
+      44,
+      0,
+      39,
+      3,
+      "STRING"
+    ],
+    [
+      22,
+      44,
+      0,
+      39,
+      4,
+      "STRING"
+    ],
+    [
+      23,
+      40,
+      1,
+      39,
+      5,
+      "INT"
+    ],
+    [
+      24,
+      40,
+      2,
+      39,
+      6,
+      "INT"
+    ],
+    [
+      25,
+      31,
+      0,
+      33,
+      0,
+      "MODEL"
+    ],
+    [
+      26,
+      41,
+      1,
+      42,
+      0,
+      "STRING"
+    ],
+    [
+      27,
+      41,
+      2,
+      42,
+      1,
+      "STRING"
+    ],
+    [
+      28,
+      42,
+      0,
+      40,
+      0,
+      "STRING"
+    ],
+    [
+      29,
+      43,
+      0,
+      40,
+      1,
+      "STRING"
+    ],
+    [
+      30,
+      43,
+      1,
+      40,
+      2,
+      "STRING"
+    ],
+    [
+      31,
+      40,
+      0,
+      44,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "01  Face",
+      "bounding": [
+        -20,
+        0,
+        480,
+        730
+      ],
+      "color": "#405c78",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "02  Character and card",
+      "bounding": [
+        480,
+        0,
+        480,
+        730
+      ],
+      "color": "#405c78",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "03  Outfit",
+      "bounding": [
+        980,
+        0,
+        480,
+        730
+      ],
+      "color": "#405c78",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "04  Final prompt",
+      "bounding": [
+        -20,
+        770,
+        1480,
+        350
+      ],
+      "color": "#53645d",
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "05  Result",
+      "bounding": [
+        1480,
+        0,
+        1140,
+        730
+      ],
+      "color": "#53645d",
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "Advanced  Model and sampling",
+      "bounding": [
+        -20,
+        1200,
+        2200,
+        1280
+      ],
+      "color": "#555b66",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ue_links": [],
+    "ds": {
+      "scale": 0.3,
+      "offset": [
+        200,
+        300
+      ]
+    },
+    "frontendVersion": "1.57.4",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
