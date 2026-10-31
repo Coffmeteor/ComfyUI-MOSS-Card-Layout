@@ -193,13 +193,6 @@ def resolve_skin_tone(c: dict) -> str:
 
 def identity_caption(c: dict, reference: bool = False) -> str:
     if reference:
-        from .face_contract import parse_face
-
-        face = (
-            parse_face(c["face_description"], c.get("reference_hair", ""))
-            if c.get("face_description", "").strip()
-            else None
-        )
         skin_phrase = resolve_skin_tone(c)
         if c.get("skin_tone", "From face selection") == "From face selection":
             parts = [
@@ -221,27 +214,15 @@ def identity_caption(c: dict, reference: bool = False) -> str:
             else f"Gender presentation: {c['presentation']}."
         )
         if c["hair_style"] == "From face selection":
-            parts.append(
-                f"Preserve the reference hairstyle ({clean(face['hair']['style'])})."
-                if face and face["hair"]["style"]
-                else "Preserve the reference hairstyle."
-            )
+            parts.append("Preserve the reference hairstyle.")
         else:
             parts.append(f"Change the hairstyle to {clean(c['hair_style'])}.")
         if c["hair_color"] == "From face selection":
-            parts.append(
-                f"Preserve the reference hair color ({clean(face['hair']['color'])})."
-                if face and face["hair"]["color"]
-                else "Preserve the reference hair color."
-            )
+            parts.append("Preserve the reference hair color.")
         else:
             parts.append(f"Use {clean(c['hair_color'])} hair color.")
         if c["expression"] == "From face selection":
-            parts.append(
-                f"Preserve the reference expression ({clean(face['expression'])})."
-                if face and face["expression"]
-                else "Preserve the reference expression."
-            )
+            parts.append("Preserve the reference expression.")
         else:
             parts.append(f"Expression: {clean(c['expression'])}.")
         parts.append(

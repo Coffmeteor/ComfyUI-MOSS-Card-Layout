@@ -63,13 +63,19 @@ class ReferencePromptTests(unittest.TestCase):
         face = self.faces[0]["face_spec"]
         for phrase in (
             "Keep the exact facial identity, eye shape, nose bridge, lip contour, and skin tone from reference image 1.",
-            f"Preserve the reference hairstyle ({face['hair']['style'].rstrip(' .')}).",
-            f"Preserve the reference hair color ({face['hair']['color'].rstrip(' .')}).",
-            f"Preserve the reference expression ({face['expression'].rstrip(' .')}).",
+            "Preserve the reference hairstyle.",
+            "Preserve the reference hair color.",
+            "Preserve the reference expression.",
             "Keep the reference eye color and gaze.",
         ):
             self.assertIn(phrase, caption)
-        self.assertNotIn(face["geometry"], caption)
+        for text in (
+            face["geometry"],
+            face["hair"]["style"].rstrip(" ."),
+            face["hair"]["color"].rstrip(" ."),
+            face["expression"].rstrip(" ."),
+        ):
+            self.assertNotIn(text, caption)
 
     def test_raw_loadimage_allows_empty_face_and_generic_inheritance(self):
         for empty in ("", "   "):

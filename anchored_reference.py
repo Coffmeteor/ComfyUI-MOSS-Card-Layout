@@ -553,7 +553,7 @@ def frame_reference(
     )
     return image, {
         "mode": "auto_portrait",
-        "suppress_margin": True,
+        "suppress_margin": bool(candid_align),
         "source_eye_distance": dist,
         "source_eye_angle": angle,
         "eye_distance": target_dist,
