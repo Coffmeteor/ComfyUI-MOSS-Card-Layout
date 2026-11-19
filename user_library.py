@@ -33,20 +33,24 @@ def valid_id(identifier: str) -> str:
     return identifier
 
 
+def _read_entry(path: Path) -> dict:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        # Older releases wrote personal metadata using the system encoding.
+        text = path.read_text(encoding="locale")
+    return json.loads(text)
+
+
 def entries(kind: str) -> list[dict]:
     directory = kind_root(kind)
     with _LOCK:
-        return [
-            json.loads(p.read_text())
-            for p in sorted(directory.glob("USER-*/entry.json"))
-        ]
+        return [_read_entry(path) for path in sorted(directory.glob("USER-*/entry.json"))]
 
 
 def get(kind: str, identifier: str) -> dict:
     with _LOCK:
-        return json.loads(
-            (kind_root(kind) / valid_id(identifier) / "entry.json").read_text()
-        )
+        return _read_entry(kind_root(kind) / valid_id(identifier) / "entry.json")
 
 
 def image_path(kind: str, identifier: str) -> Path:
@@ -157,7 +161,9 @@ def fields(data: dict, kind: str) -> dict:
 
 def atomic_json(path: Path, value: dict) -> None:
     temporary = path.with_name(path.name + ".part")
-    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
+    temporary.write_text(
+        json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     os.replace(temporary, path)
 
 

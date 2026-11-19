@@ -16,7 +16,7 @@ CATALOG = Path(__file__).parent / "resources/portrait-gallery.json"
 
 
 def official_entries() -> list[dict]:
-    return json.loads(CATALOG.read_text())["entries"]
+    return json.loads(CATALOG.read_text(encoding="utf-8"))["entries"]
 
 
 def entries() -> list[dict]:

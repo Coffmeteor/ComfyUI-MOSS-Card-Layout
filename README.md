@@ -5,7 +5,7 @@ portrait, adult anatomy reference, clothed front and clothed back. The reference
 workflow uses one full-canvas sampler and one VAE decode, with JSON/bbox layout,
 portrait-scoped reference conditioning, automatic framing and shared skin controls.
 
-**Release:** nodes 1.4.0 · reference LoRA 1.0.0 · ComfyUI 0.43.0 plus the bundled
+**Release:** nodes 1.4.1 · reference LoRA 1.0.0 · ComfyUI 0.43.0 plus the bundled
 reference-support patch. The existing 16-step text workflow remains available.
 
 - [LoRA, workflows, examples and walkthrough](https://huggingface.co/Coffmeteor/MOSS-Character-Studio)
